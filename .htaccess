@@ -1,0 +1,2 @@
+ErrorDocument 403 /LoginLogoffTema5/error/403.html
+ErrorDocument 404 /LoginLogoffTema5/error/404.html

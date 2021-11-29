@@ -1,0 +1,23 @@
+/* 
+    Created on : 29 nov. 2021, 16:52:01
+    Author     : Usuario
+*/
+
+header{
+    color: teal;
+    border-bottom: 3px solid teal;
+}
+main{
+    text-align: center;
+}
+
+a.button{
+    color: teal;
+    border: 2px solid teal;
+    background-color: ghostwhite;   
+}
+a.button:hover{
+    color: ghostwhite;
+    background-color: indigo;
+    border: 2px solid ghostwhite;
+}

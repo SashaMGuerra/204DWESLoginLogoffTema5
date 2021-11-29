@@ -1,0 +1,84 @@
+/* 
+    Created on : 19 nov. 2021, 17:05:18
+    Author     : Sasha
+
+    Colores:
+        paleturquoise, teal, indigo, ghostwhite
+*/
+
+body{
+    margin: 0;
+    font-family: sans-serif;
+}
+header{
+    text-align: center;
+    color: indigo;
+    background-color: ghostwhite;
+    margin-bottom: 5px;
+    border-bottom: 3px solid indigo;
+}
+main{
+    margin: 5px;
+}
+
+
+/* Estilo del footer */
+/* Para mantener el footer abajo */
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
+footer {
+    font-family: sans-serif;
+    text-align: center;
+    font-size: small;
+    background-color: indigo;
+    color: white;
+    font-size: 11px;
+    padding: 5px 0;
+    flex-shrink: 0;
+}
+footer > *{
+    display: inline-block;
+}
+footer img{
+    width: 30px;
+    margin-right: 5px;
+}
+footer > div{
+    position: relative;
+    bottom: 8px;
+}
+
+/*Botones*/
+.button{
+    display: inline-block;
+    border: 2px solid black;
+    text-align: center;
+    padding: 7px;
+}
+
+/*Botón volver*/
+a.volver{
+    font-family: sans-serif;
+    font-size: small;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: black;
+    color: white;
+    padding: 7px;
+    position: absolute;
+    top: 5px; right: 5px;
+}
+
+
+/*Enlaces*/
+a{
+    text-decoration: none;
+}

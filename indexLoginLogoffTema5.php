@@ -12,7 +12,7 @@
     </head>
     <body>
         <header>
-            <h1>Tema 5 - Login-Logoff</h1>
+            <h1>Tema 5 - Login-Logout</h1>
         </header>
         <main>
             <div class="btContainer">

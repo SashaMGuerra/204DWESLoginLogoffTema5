@@ -10,13 +10,39 @@ body{
     margin: 0;
     font-family: sans-serif;
 }
+
+/* Header + botón volver */
 header{
     text-align: center;
     color: indigo;
     background-color: ghostwhite;
     margin-bottom: 5px;
     border-bottom: 3px solid indigo;
+    position: relative;
 }
+/*Botón volver*/
+a.volver{
+    background-color: paleturquoise;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 80px;
+}
+a.volver img{
+    height: 70%;
+}
+a.volver .hover{
+    display: none;
+}
+a.volver:hover > img.hover{
+    display: block;
+}
+a.volver:hover > img.normal{
+    display: none;
+}
+
 main{
     margin: 5px;
 }
@@ -64,23 +90,18 @@ footer > div{
     border: 2px solid indigo;
     background-color: ghostwhite;
     text-align: center;
-    padding: 7px;
+    padding: 5px 7px;
     text-transform: uppercase;
     cursor: pointer;
 }
-
-/*Botón volver*/
-a.volver{
-    font-family: sans-serif;
-    font-size: small;
-    text-decoration: none;
-    text-transform: uppercase;
-    background-color: indigo;
-    color: white;
-    padding: 7px;
-    position: absolute;
-    top: 5px; right: 5px;
+.button:hover{
+    color: paleturquoise;
+    border: 2px solid paleturquoise;
+    background-color: teal;
+    
 }
+
+
 
 
 /*Enlaces*/

@@ -6,17 +6,3 @@
 .btContainer{
     text-align: center;
 }
-
-.btContainer .button{
-    text-transform: uppercase;
-    font-weight: bold;
-    border: 2px solid indigo;
-    color: indigo;
-    background-color: ghostwhite;
-}
-
-.btContainer .button:hover{
-    background-color: teal;
-    color: paleturquoise;
-    border: 2px solid paleturquoise;
-}

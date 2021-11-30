@@ -19,7 +19,7 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
 }
 
 /**
- * Si se selecciona 
+ * Si se selecciona cerrar sesión, se cierra y destruye, y vuelve a la página de login.
  */
 if (isset($_REQUEST['logout'])) {
     session_unset();
@@ -29,7 +29,7 @@ if (isset($_REQUEST['logout'])) {
 }
 
 /*
- * 
+ * Si se pide acceder a la ventana de detalle, accede a ella.
  */
 if (isset($_REQUEST['detalle'])) {
     header("Location: detalle.php");
@@ -42,15 +42,17 @@ if (isset($_REQUEST['detalle'])) {
         <meta charset="UTF-8">
         <title>Página principal - LoginLogoutTema5</title>
         <link href="../webroot/css/commonLoginLogoffTema5.css" rel="stylesheet" type="text/css"/>
+        <style>
+            
+        </style>
     </head>
     <body>
         <header>
-<?php include_once './elementoBtVolver.php'; // Botón de regreso  ?>
+            <?php include_once './elementoBtVolver.php'; // Botón de regreso  ?>
             <h1>Proyecto Login-Logout</h1>
         </header>
         <main>
             <div>Bienvenido <?php echo $_SESSION['usuarioDAW204AppLoginLogoff'] ?></div>
-
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                 <input class="button" type="submit" name="detalle" value="detalle"/>
                 <input class="button" type="submit" name="logout" value="logout"/>

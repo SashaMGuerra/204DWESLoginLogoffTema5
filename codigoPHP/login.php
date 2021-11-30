@@ -146,7 +146,7 @@ if ($bEntradaOK) {
         <style>
             form{
                 text-align: center;
-                max-width: 500px;
+                max-width: 300px;
                 margin: auto;
             }
             fieldset{
@@ -175,20 +175,6 @@ if ($bEntradaOK) {
                 padding: 10px;
                 border-bottom: 1px solid indigo;
             }
-            input[type="submit"]{
-                border: 2px solid indigo;
-                background-color: ghostwhite;
-                color: indigo;
-                text-transform: uppercase;
-                font-weight: bold;
-                padding: 5px 10px;
-                cursor: pointer;
-            }
-            input[type="submit"]:hover{
-                border: 2px solid teal;
-                background-color: paleturquoise;
-                color: teal;
-            }
         </style>
     </head>
     <body>
@@ -208,7 +194,7 @@ if ($bEntradaOK) {
                         <li><input class="obligatorio" type='password' name='password' id='password'/></li>
                     </ul>
                 </fieldset>
-                <input type='submit' name='submit' value='Entrar'/>
+                <input class="button" type='submit' name='submit' value='Entrar'/>
             </form>
         </main>
         <?php include_once './elementoFooter.php'; //Footer      ?>

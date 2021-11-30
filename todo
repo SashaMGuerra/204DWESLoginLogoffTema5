@@ -1,3 +1,22 @@
+index ->    
+            sin poner la ruta total, debe abrirse el index (LoginLogout/) (htaccess)
+            enlace al índice principal de 1&1
+            
+login ->    no información de errores
+            botón ver password
+            nombre de usuario: el que pone en la hoja de ejercicios
+
+programa -> 
+
+detalle ->  
+
+los colores y fondos tienen que ser constantes.
+
+me gusta la idea de poner una imagen de fondo en el index
+
+programa.php -> 'bienvenido (usuario), es la () vez que se conecta. Se conectó
+por última vez el ()'
+    botón logout
 
 "Bievenvenido, ésta es la vez X que se conecta" (mensaje de bienvenida).
     

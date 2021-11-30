@@ -59,9 +59,14 @@ footer > div{
 /*Botones*/
 .button{
     display: inline-block;
-    border: 2px solid black;
+    color: indigo;
+    font-weight: bold;
+    border: 2px solid indigo;
+    background-color: ghostwhite;
     text-align: center;
     padding: 7px;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 /*Botón volver*/

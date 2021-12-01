@@ -84,7 +84,7 @@ try {
     </head>
     <body>
         <header>
-            <?php include_once './elementoBtVolver.php'; // Botón de regreso   ?>
+            <a class="volver" href="login.php"><img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver"></a>        
             <h1>Proyecto Login-Logout</h1>
         </header>
         <main>

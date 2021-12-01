@@ -147,14 +147,53 @@ if ($bEntradaOK) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../webroot/css/commonLoginLogoffTema5.css" rel="stylesheet" type="text/css"/>
         <style>
+            @media (min-width: 1350px){
+                body{
+                    background-image: url('../webroot/media/img/background-cat.jpg');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-attachment: fixed;
+                }
+            }
+            @media (max-width: 1350px){
+                body{
+                    background-image: url('../webroot/media/img/background-cat-medium.jpg');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-attachment: fixed;
+                }
+            }
+            @media (max-width: 900px){
+                body{
+                    background-image: url('../webroot/media/img/background-cat-vertical.jpg');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-attachment: fixed;
+                }
+            }
+            
+            header{
+                background-color: rgb(75, 0, 130, 0.75); /* Indigo */
+                color: paleturquoise;
+                border-bottom: 3px solid teal;
+                
+            }
+            footer{
+                background-color: rgb(75, 0, 130, 0.75); /* Indigo */
+                border-top: 3px solid teal;
+            }
+            
             form{
                 text-align: center;
-                max-width: 300px;
-                margin: auto;
+                padding: 10px 0 20px;
+                background-color: rgb(75,0,130, 0.5);  /* Indigo */
+                color: white;
+                box-shadow: 0 0 30px black;
             }
             fieldset{
                 border: none;
             }
+            
             ul{
                 list-style: none;
                 margin: 0;
@@ -164,19 +203,19 @@ if ($bEntradaOK) {
             li{
                 margin-bottom: 10px;
             }
-            label.obligatorio:after{
-                content: "*";
-                color: red;
-            }
-            div.error{
-                color: red;
-                font-size: smaller;
-            }
-
             input[type="text"], input[type="password"]{
                 border: none;
                 padding: 10px;
                 border-bottom: 1px solid indigo;
+                background-color: ghostwhite;
+            }
+            label.obligatorio:after{
+                content: "*";
+                color: paleturquoise;
+            }
+            
+            input.button{
+                background-color: paleturquoise;
             }
         </style>
     </head>

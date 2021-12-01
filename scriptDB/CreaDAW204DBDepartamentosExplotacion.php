@@ -32,8 +32,8 @@
                 T01_CodUsuario VARCHAR(8) PRIMARY KEY,
                 T01_Password VARCHAR(64) NOT NULL, -- 64 porque el largo máximo es de 8 caracteres, más su codificación en SHA2.
                 T01_DescUsuario VARCHAR(255) NOT NULL, -- Contiene nombre y apellidos del usuario.
-                T01_FechaHoraUltimaConexion DATETIME NOT NULL DEFAULT NOW(),
-                T01_NumConexiones INT DEFAULT 1 NOT NULL,
+                T01_FechaHoraUltimaConexion DATETIME NULL,
+                T01_NumConexiones INT DEFAULT 0 NOT NULL,
                 T01_Perfil ENUM('administrador', 'usuario') DEFAULT 'usuario',
                 T01_ImagenUsuario MEDIUMBLOB NULL
             ) ENGINE=INNODB;

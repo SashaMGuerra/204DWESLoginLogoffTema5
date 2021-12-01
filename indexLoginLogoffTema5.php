@@ -17,7 +17,6 @@
         <main>
             <div class="btContainer">
                 <a class="button" href="codigoPHP/login.php">Login</a>
-                <a class="button" href="../proyectoDWES/indexProyectoDWES.php">Salir</a>
             </div>
             
         </main>

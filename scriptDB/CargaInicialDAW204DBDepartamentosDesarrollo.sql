@@ -26,7 +26,7 @@ INSERT INTO T01_Usuario(T01_CodUsuario, T01_Password, T01_DescUsuario) VALUES
 
 -- Inserción de usuarios administradores.
 INSERT INTO T01_Usuario(T01_CodUsuario, T01_Password, T01_DescUsuario, T01_Perfil) VALUES
-    ('admin','paso','Admin','administrador');
+    ('admin',SHA2('adminpaso',256),'Admin','administrador');
 
 INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_VolumenDeNegocio) VALUES
     ('INF','Departamento de Informatica',1.5),

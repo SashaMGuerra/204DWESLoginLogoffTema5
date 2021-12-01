@@ -2,7 +2,5 @@ index ->    sin poner la ruta total, debe abrirse el index (LoginLogout/) (htacc
             enlace al índice principal de 1&1
             me gusta la idea de poner una imagen de fondo en el index
             
-login ->    botón ver password
-
-programa.php -> 'bienvenido (usuario), es la () vez que se conecta. Se conectó
-por última vez el ()'
+login ->    mensaje de bienvenida: añadir seelct para número de conexiones
+            botón ver password

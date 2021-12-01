@@ -7,15 +7,12 @@
  * Constantes para la conexión con la base de datos mediante PDO.
  */
 
-/*
 // Desarrollo - sauces.
 define('HOST', 'mysql:host=daw204.sauces.local;dbname=DB204DWESLoginLogoffTema5');
 define('USER', 'User204DWESLoginLogoffTema5');
 define('PASSWORD', 'paso');
- * 
- */
 
-// Desarrollo - Instituto.
+// Desarrollo - Instituto, máquina virtual.
 /*
 define('HOST', 'mysql:host=192.168.3.104;dbname=DB204DWESLoginLogoffTema5');
 define('USER', 'user204DWESLoginLogoffTema5');
@@ -23,10 +20,13 @@ define('PASSWORD', 'P@ssw0rd');
  * 
  */
 
+/*
 // Desarrollo - Casa.
 define('HOST', 'mysql:host=192.168.1.30;dbname=DB204DWESLoginLogoffTema5');
 define('USER', 'User204DWESLoginLogoffTema5');
 define('PASSWORD', 'paso');
+ * 
+ */
 
 
 /*

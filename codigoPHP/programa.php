@@ -88,15 +88,27 @@ try {
             <h1>Proyecto Login-Logout</h1>
         </header>
         <main>
-            <div class="bienvenida">Bienvenido <span class="user"><?php echo $_SESSION['usuarioDAW204AppLoginLogoff'] ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
+            <div class="bienvenida"><?php 
+                switch($_COOKIE['idiomaPreferido']){
+                    case 'ES':
+                        echo 'Bienvenido';
+                        break;
+                    case 'EN':
+                        echo 'Welcome';
+                        break;
+                    case 'PT':
+                        echo 'Bem-vindo';
+                        break;
+                }
+            ?> <span class="user"><?php echo $_SESSION['usuarioDAW204AppLoginLogoff'] ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
                 if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
-                    ?> y su última conexión anterior fue <?php
+                    ?> y su última conexión fue <?php
                     echo $_SESSION['FechaHoraUltimaConexionAnterior'];
                 }
                 ?>.</div>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                 <input class="button" type="submit" name="detalle" value="detalle"/>
-                <input class="button" type="submit" name="logout" value="logout"/>
+                <input class="button" type="submit" name="logout" value="Cerrar sesión"/>
             </form>
         </main>
         <?php include_once './elementoFooter.php'; //Footer   ?>

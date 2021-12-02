@@ -61,6 +61,11 @@ if (isset($_REQUEST['login'])) {
             $oResultadoSelect = $oDB->prepare($sSelect);
             $oResultadoSelect->execute();
 
+            /**
+             * Si bien la fecha-hora de última conexión puede existir como null,
+             * el resultado del select devuelve un objecto que contiene esta
+             * información como atributo.
+             */
             $oResultado = $oResultadoSelect->fetchObject();
             
         } catch (PDOException $exception) {
@@ -129,13 +134,21 @@ if ($bEntradaOK) {
 
     /* 
      * Variables de sesión para el usuario.
-     * Toma el timestamp almacenado en la base de datos y la guarda formateada
+     * 
+     * Si el timestamp recogido es diferente a null, lo guarda formateado
      * porque en la ventana de detalle, si no, da error.
      */
     $_SESSION['usuarioDAW204AppLoginLogoff'] = $aFormulario['usuario'];
-    $oFecha = new DateTime();
-    $_SESSION['FechaHoraUltimaConexionAnterior'] = $oFecha->setTimestamp($oResultado->T01_FechaHoraUltimaConexion)->format('d/m/Y H:i:s T');
-        
+    if(!is_null($oResultado->T01_FechaHoraUltimaConexion)){
+        $oFecha = new DateTime();
+        $oFecha->setTimestamp($oResultado->T01_FechaHoraUltimaConexion);
+        $_SESSION['FechaHoraUltimaConexionAnterior'] = $oFecha->format('d/m/Y H:i:s T');
+    }
+    // Si no ha habido conexiones anteriores, pone la fecha de última conexión a null.
+    else{
+        $_SESSION['FechaHoraUltimaConexionAnterior'] = null;
+    }
+    
     // Reenvío del usuario a la página de programa.
     header('Location: programa.php');
     exit;
@@ -237,7 +250,7 @@ if ($bEntradaOK) {
                         <li><input class="obligatorio" type='password' name='password' id='password'/></li>
                     </ul>
                 </fieldset>
-                <input class="button" type='submit' name='login' value='Entrar'/>
+                <input class="button" type='submit' name='login' value='Iniciar sesión'/>
             </form>
         </main>
         <?php include_once './elementoFooter.php'; //Footer      ?>

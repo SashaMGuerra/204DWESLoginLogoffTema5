@@ -30,6 +30,9 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
                 margin: auto;
                 table-layout: fixed;
             }
+            td{
+                overflow-wrap: break-word;
+            }
         </style>
     </head>
     <body>
@@ -109,6 +112,9 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
             phpinfo();
             ?>
         </main>
-        <?php include_once './elementoFooter.php'; //Footer  ?>
+        <footer>
+            <a style="background-color: transparent" target="_blank" href="https://github.com/SashaMGuerra/204DWESLoginLogoffTema5"><img src="../webroot/media/img/github_logo_white.png" alt="repositorio"></a>
+            <div>© 2021-2022 Isabel Martínez Guerra — IES Los Sauces (Benavente, Zamora) — Modificado el 24/11/2021.</div>
+        </footer>
     </body>
 </html>

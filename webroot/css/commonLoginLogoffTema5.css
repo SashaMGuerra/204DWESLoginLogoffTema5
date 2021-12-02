@@ -47,6 +47,11 @@ main{
     margin: 5px;
 }
 
+/* Formularios */
+form{
+    margin: auto;
+}
+
 
 /* Estilo del footer */
 /* Para mantener el footer abajo */
@@ -100,9 +105,6 @@ footer > div{
     background-color: teal;
     
 }
-
-
-
 
 /*Enlaces*/
 a{

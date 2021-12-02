@@ -15,7 +15,7 @@ define('PASSWORD', 'paso');
  * 
  */
 
-// Desarrollo - Instituto.
+// Desarrollo - Instituto, máquina virtual.
 /*
 define('HOST', 'mysql:host=192.168.3.104;dbname=DB204DWESLoginLogoffTema5');
 define('USER', 'user204DWESLoginLogoffTema5');

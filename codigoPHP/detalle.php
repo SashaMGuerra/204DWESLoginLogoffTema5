@@ -30,6 +30,9 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
                 margin: auto;
                 table-layout: fixed;
             }
+            td{
+                overflow-wrap: break-word;
+            }
         </style>
     </head>
     <body>

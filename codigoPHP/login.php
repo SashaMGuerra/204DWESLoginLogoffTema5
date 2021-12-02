@@ -36,12 +36,11 @@ if (isset($_REQUEST['login'])) {
             || validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 8, 4, OBLIGATORIO)) {
         $bEntradaOK = false;
     }
-
     /**
      * Si no existe ningún error por el momento, comprueba que el usuario y la
      * contraseña existan y sean correctos en la base de datos.
      */
-    if ($bEntradaOK) {
+    else {
         /* Recogida de información */
         $aFormulario['usuario'] = $_REQUEST['usuario'];
         $aFormulario['password'] = $_REQUEST['password'];
@@ -99,22 +98,16 @@ else {
  * Finalmente pasa al usuario a la página de programa.php
  */
 if ($bEntradaOK) {
-    /* Inicio de la sesión para almacenar el código de usuario */
-    session_start();
-    
     // Añadido al registro de conexiones y última hora de conexión.
     try {
         // Conexión con la base de datos.
         $oDB = new PDO(HOST, USER, PASSWORD);
         $oDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Fecha-hora actual.
-        $oDateTime = new DateTime();
-
         // Query de actualización.
         $sUpdate = <<<QUERY
             UPDATE T01_Usuario SET T01_NumConexiones=T01_NumConexiones+1,
-            T01_FechaHoraUltimaConexion = '{$oDateTime->format("y-m-d h:i:s")}'
+            T01_FechaHoraUltimaConexion = unix_timestamp(now())
             WHERE T01_CodUsuario='{$aFormulario['usuario']}';
         QUERY;
 
@@ -130,10 +123,18 @@ if ($bEntradaOK) {
     } finally {
         unset($oDB);
     }
+    
+    /* Inicio de la sesión para almacenar el código de usuario */
+    session_start();
 
-    // Variables de sesión para el usuario.
+    /* 
+     * Variables de sesión para el usuario.
+     * Toma el timestamp almacenado en la base de datos y la guarda formateada
+     * porque en la ventana de detalle, si no, da error.
+     */
     $_SESSION['usuarioDAW204AppLoginLogoff'] = $aFormulario['usuario'];
-    $_SESSION['FechaHoraUltimaConexion'] = $oResultado->T01_FechaHoraUltimaConexion;
+    $oFecha = new DateTime();
+    $_SESSION['FechaHoraUltimaConexionAnterior'] = $oFecha->setTimestamp($oResultado->T01_FechaHoraUltimaConexion)->format('d/m/Y H:i:s T');
         
     // Reenvío del usuario a la página de programa.
     header('Location: programa.php');

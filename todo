@@ -1,6 +1,12 @@
 index ->    sin poner la ruta total, debe abrirse el index (LoginLogout/) (htaccess)
             enlace al índice principal de 1&1
-            me gusta la idea de poner una imagen de fondo en el index
+            cookie que deje elegir idioma.
             
-login ->    mensaje de bienvenida: añadir seelct para número de conexiones
-            botón ver password
+login ->    botón ver password
+            En el update, cambiar por now() 
+
+
+los nombres de las flechas son los nombres de los botones
+
+ventana de error para los catch
+    recuperar de la sesión el mensaje de error

@@ -89,9 +89,9 @@ try {
         </header>
         <main>
             <div class="bienvenida">Bienvenido <span class="user"><?php echo $_SESSION['usuarioDAW204AppLoginLogoff'] ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
-                if (!is_null($_SESSION['FechaHoraUltimaConexion'])) {
+                if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
                     ?> y su última conexión anterior fue <?php
-                    echo $_SESSION['FechaHoraUltimaConexion'];
+                    echo $_SESSION['FechaHoraUltimaConexionAnterior'];
                 }
                 ?>.</div>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">

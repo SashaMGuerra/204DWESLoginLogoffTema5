@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Isabel Martínez Guerra
@@ -17,6 +16,7 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
     header('Location: login.php');
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Isabel Martínez Guerra
@@ -64,6 +63,7 @@ try {
     unset($oDB);
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">

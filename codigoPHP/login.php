@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Isabel Martínez Guerra
@@ -154,6 +153,7 @@ if ($bEntradaOK) {
     exit;
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">

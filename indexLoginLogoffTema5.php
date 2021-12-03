@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * @author Isabel Martínez Guerra
@@ -27,6 +26,7 @@ if (isset($_REQUEST['login'])) {
     }
 }
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">

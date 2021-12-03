@@ -8,7 +8,6 @@
  * Página de entrada de la aplicación.
  * Permite elegir su idioma.
  */
-
 require_once './core/libreriaValidacion.php'; // Librería de validación.
 
 /**
@@ -20,13 +19,13 @@ if (isset($_REQUEST['login'])) {
      * Validación de los posibles idiomas que puede tomar la página. Si el idioma
      * está entre los existentes, crea la cookie y manda al usuario al login.
      */
-    if(!validacionFormularios::validarElementoEnLista($_REQUEST['listaIdiomas'], ['ES', 'EN', 'PT'])) {
+    
+    if (!validacionFormularios::validarElementoEnLista($_REQUEST['listaIdiomas'], ['ES', 'EN', 'PT'])) {
         setcookie('idiomaPreferido', $_REQUEST['listaIdiomas']);
-        header('Location: codigoPHP/login.php');
+        header('Location: ../LoginLogoffTema5/codigoPHP/login.php');
         exit;
     }
 }
-
 ?>
 <html>
     <head>
@@ -40,6 +39,12 @@ if (isset($_REQUEST['login'])) {
             <h1>Tema 5 - Login-Logout</h1>
         </header>
         <main>
+            <!--
+            <h2>Scripts</h2>
+            <a href="scriptDB/CreaDAW204DBDepartamentosExplotacion.php">Creación</a>
+            <a href="scriptDB/CargaInicialDAW204DBDepartamentosExplotacion.php">Carga</a>
+            <a href="scriptDB/BorraDAW204DBDepartamentosExplotacion.php">Borrado</a>
+            -->
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                 <input class="button" type='submit' name='login' value='Login'/>
                 <div>
@@ -51,6 +56,6 @@ if (isset($_REQUEST['login'])) {
                 </div>
             </form>
         </main>
-        <?php include_once './codigoPHP/elementoFooter.php'; // Footer ?>
+<?php include_once './codigoPHP/elementoFooter.php'; // Footer  ?>
     </body>
 </html>

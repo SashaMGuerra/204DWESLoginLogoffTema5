@@ -210,17 +210,17 @@ if ($bEntradaOK) {
                 <fieldset>
                     <ul>
                         <li><label class='obligatorio' for='passwordActual' >Contraseña actual</label></li>
-                        <li><input class='obligatorio' type='text' name='passwordActual' id='passwordActual'/></li>
+                        <li><input class='obligatorio' type='password' name='passwordActual' id='passwordActual'/></li>
                         <li class="error"><?php echo $aErrores['passwordActual'] ?></li>
                     </ul>
                     <ul>
                         <li><label class='obligatorio' for='passwordNueva' >Nueva contraseña</label></li>
-                        <li><input class='obligatorio' type='text' name='passwordNueva' id='passwordNueva'/></li>
+                        <li><input class='obligatorio' type='password' name='passwordNueva' id='passwordNueva'/></li>
                         <li class="error"><?php echo $aErrores['passwordNueva'] ?></li>
                     </ul>
                     <ul>
                         <li><label class='obligatorio' for='passwordRepeticion' >Repita la contraseña</label></li>
-                        <li><input class='obligatorio' type='text' name='passwordRepeticion' id='passwordRepeticion'/></li>
+                        <li><input class='obligatorio' type='password' name='passwordRepeticion' id='passwordRepeticion'/></li>
                         <li class="error"><?php echo $aErrores['passwordRepeticion'] ?></li>
                     </ul>
                 </fieldset>

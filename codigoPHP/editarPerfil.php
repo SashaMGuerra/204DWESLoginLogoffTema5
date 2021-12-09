@@ -7,7 +7,7 @@
  * Página de edición del perfil del usuario.
  */
 /*
- * Continuación de la sesión.
+ * Recuperación de la sesión.
  * Si no se ha hecho login (la variable de sesión del usuario no está definida),
  * devuelve al usuario a la página para hacerlo.
  */
@@ -19,7 +19,7 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
 
 // Si se ha seleccionado Cancelar, regresa a la página de programa.
 if (isset($_REQUEST['cancelar'])) {
-    header('Location: programa.php');
+    header('Location: programa.php?perfilEditado=no');
     exit;
 }
 
@@ -49,7 +49,7 @@ if (isset($_REQUEST['eliminarCuenta'])) {
         /*
          * Si sucede alguna excepción, envía al usuario al login.
          */
-        header('Location: login.php');
+        header('Location: programa.php?perfilEliminado=no');
         exit;
     } finally {
         unset($oDB);
@@ -60,7 +60,7 @@ if (isset($_REQUEST['eliminarCuenta'])) {
     session_destroy();
    
     // Regreso a la página de login.
-    header('Location: login.php');
+    header('Location: login.php?perfilEliminado=yes');
     exit;
 }
 
@@ -77,12 +77,17 @@ require_once '../config/configDB.php'; // Constantes de conexión a la base de d
 /* Información del formulario */
 $aFormulario = [
     'usuario' => $_SESSION['usuarioDAW204AppLoginLogoff'],
-    'descripcion' => ''
+    'descripcion' => '',
+    'numConexiones' => '',
+    'fechaHoraUltimaConexion' => '',
+    'perfil' => '',
+    'imagenUsuario' => ''
 ];
 
 /* Array de errores */
 $aErrores = [
-    'descripcion' => ''
+    'descripcion' => '',
+    'imagenUsuario' => ''
 ];
 
 
@@ -94,7 +99,7 @@ try {
 
     // Query de selección.
     $sSelect = <<<QUERY
-        SELECT T01_DescUsuario FROM T01_Usuario
+        SELECT T01_DescUsuario, T01_NumConexiones, T01_Perfil, T01_ImagenUsuario FROM T01_Usuario
         WHERE T01_CodUsuario='{$aFormulario['usuario']}';
     QUERY;
 
@@ -104,11 +109,15 @@ try {
 
     $oResultado = $oResultadoSelect->fetchObject();
     $aFormulario['descripcion'] = $oResultado->T01_DescUsuario;
+    $aFormulario['numConexiones'] = $oResultado->T01_NumConexiones;
+    $aFormulario['fechaHoraUltimaConexion'] = $_SESSION['FechaHoraUltimaConexionAnterior'];
+    $aFormulario['perfil'] = $oResultado->T01_Perfil;
+    $aFormulario['imagenUsuario'] = $oResultado->T01_ImagenUsuario;
 } catch (PDOException $exception) {
     /*
      * Si sucede alguna excepción, envía al usuario al login.
      */
-    header('Location: login.php');
+    header('Location: programa.php?perfilEditado=no');
     exit;
 } finally {
     unset($oDB);
@@ -123,7 +132,8 @@ if (isset($_REQUEST['editarPerfil'])) {
 
     // Si la descripción no cumple con lo especificado, mostrará el error.
     $aErrores['descripcion'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 255, 3, OBLIGATORIO);
-
+    $aErrores['imagenUsuario'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['imagenUsuario'], 255, 3);
+    
     // Recorrido del array de errores. Si encuentra alguno pone el manejador a false.
     foreach ($aErrores as $sCampo => $sError) {
         if ($sError != null) {
@@ -145,6 +155,7 @@ if (isset($_REQUEST['editarPerfil'])) {
 if ($bEntradaOK) {
     /* Recogida de información */
     $aFormulario['descripcion'] = $_REQUEST['descripcion'];
+    $aFormulario['imagenUsuario'] = $_REQUEST['imagenUsuario'];
 
     try {
         // Conexión con la base de datos.
@@ -153,7 +164,8 @@ if ($bEntradaOK) {
 
         // Query de actualización.
         $sUpdate = <<<QUERY
-            UPDATE T01_Usuario SET T01_DescUsuario = "{$aFormulario['descripcion']}"
+            UPDATE T01_Usuario SET T01_DescUsuario = "{$aFormulario['descripcion']}",
+            T01_ImagenUsuario = "{$aFormulario['imagenUsuario']}"
             WHERE T01_CodUsuario = "{$aFormulario['usuario']}";
         QUERY;
 
@@ -164,14 +176,14 @@ if ($bEntradaOK) {
         /*
          * Si sucede alguna excepción, envía al usuario al login.
          */
-        header('Location: login.php');
+        header('Location: programa.php?perfilEditado=no');
         exit;
     } finally {
         unset($oDB);
     }
 
     // Reenvío del usuario a la página de programa.
-    header('Location: programa.php');
+    header('Location: programa.php?perfilEditado=yes');
     exit;
 }
 ?>
@@ -254,6 +266,23 @@ if ($bEntradaOK) {
                         <li><label class="obligatorio" for='descripcion' >Nombre y apellidos</label></li>
                         <li><input class="obligatorio" type='text' name='descripcion' id='descripcion' value="<?php echo $aFormulario['descripcion'] ?? '' ?>"/></li>
                         <li><?php echo $aErrores['descripcion'] ?></li>
+                    </ul>
+                    <ul>
+                        <li><label for='numConexiones'>Número de conexiones</label></li>
+                        <li><input type='text' name='numConexiones' id='numConexiones' value="<?php echo $aFormulario['numConexiones'] ?>" disabled/></li>
+                    </ul>
+                    <ul>
+                        <li><label for='fechaHoraUltimaConexion'>Fecha-hora de última conexión</label></li>
+                        <li><input type='text' name='fechaHoraUltimaConexion' id='fechaHoraUltimaConexion' value="<?php echo $aFormulario['fechaHoraUltimaConexion'] ?>" disabled/></li>
+                    </ul>
+                    <ul>
+                        <li><label for='perfil'>Perfil de usuario</label></li>
+                        <li><input type='text' name='perfil' id='perfil' value="<?php echo $aFormulario['perfil'] ?>" disabled/></li>
+                    </ul>
+                    <ul>
+                        <li><label for='imagenUsuario' >Imagen de usuario</label></li>
+                        <li><input type='text' name='imagenUsuario' id='imagenUsuario' value="<?php echo $aFormulario['imagenUsuario'] ?? '' ?>"/></li>
+                        <li><?php echo $aErrores['imagenUsuario'] ?></li>
                     </ul>
                     <ul>
                         <li><input class="button password" type='submit' name='cambiarPassword' value='Cambiar contraseña'/></li>

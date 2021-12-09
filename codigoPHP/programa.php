@@ -9,7 +9,7 @@
  */
 
 /*
- * Comienzo de la sesión.
+ * Recuperación de la sesión.
  * Si no se ha hecho login (la variable de sesión del usuario no está definida),
  * devuelve al usuario a la página para hacerlo.
  */

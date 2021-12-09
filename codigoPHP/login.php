@@ -9,6 +9,7 @@
  * Comprueba si la combinación usuario-contraseña introducidos existen en la base
  * de datos, y si no es así, lo pide de nuevo.
  */
+
 /*
  * Si se quiere registrar, va a la página de registro.
  */

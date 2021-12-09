@@ -34,7 +34,7 @@ if (isset($_REQUEST['registro'])) {
      */
     if (validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 8, 4, OBLIGATORIO) ||
         validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 255, 3, OBLIGATORIO) ||
-            validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 8, 4, OBLIGATORIO)) {
+            validacionFormularios::validarPassword($_REQUEST['password'], 8, 4, 1)) {
         $bEntradaOK = false;
         $sError = 'Tanto el usuario como la contraseña deben tener entre 8 y 4 caracteres.<br>Nombre y apellidos deben tener mínimo 3 caracteres.';
     }

@@ -1,23 +1,13 @@
 index ->    sin poner la ruta total, debe abrirse el index (LoginLogout/) (htaccess)
-            enlace al índice principal de 1&1
             
 login ->    botón ver password
-            función time() para tomar el timestamp actual
 
-editarPerfil -> mostrar todos los campos de la tabla
-                imagen del usuario: mostrar y cambiar
-                confirmación de eliminación
+editarPerfil -> imagen del usuario: mostrar y cambiar
 
 configApp -> datos de los idiomas como array de arrays.
 
-el title de algunas páginas no es correcto
 
 traducir título mediante la cookie
-añadir tags del repositorio
 
 ventana de error para los catch
     recuperar de la sesión el mensaje de error
-
-información tras pasar con header de una página a otra
-
-solucionar lo de 1&1

@@ -26,7 +26,7 @@ if (isset($_REQUEST['cancelar'])) {
 require_once '../config/configDB.php'; // Constantes de conexión a la base de datos.
 
 /*
- * Si se ha seleccionado Eliminar cuenta, elimina la cuenta, cierra sesión y
+ * Si se ha confirmado Eliminar cuenta, elimina la cuenta, cierra sesión y
  * regresa a la página de login.
  */
 if (isset($_REQUEST['eliminarCuenta'])) {
@@ -191,16 +191,36 @@ if ($bEntradaOK) {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Login - LoginLogoutTema5</title>
+        <title>Editar perfil - LoginLogoutTema5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../webroot/css/commonLoginLogoffTema5.css" rel="stylesheet" type="text/css"/>
         <style>
             form{
                 text-align: center;
                 padding: 10px 0 20px;
+                position: relative;
             }
             fieldset{
                 border: none;
+            }
+            
+            /* Cuando existe fieldset.confirmacionEliminarCuenta, todos los fieldset
+            hermanos que no son ese desaparecen.*/
+            fieldset.confirmacionEliminarCuenta ~ fieldset:not([class='confirmacionEliminarCuenta']){
+                display: none;
+            }
+            fieldset.confirmacionEliminarCuenta{
+                max-width: 450px;
+                position: absolute;
+                margin: 0 auto;
+                left: 0; right: 0;
+                top: 25vh;
+                background-color: ghostwhite;
+                border: 3px solid indigo;
+            }
+            fieldset.confirmacionEliminarCuenta div{
+                font-size: large;
+                margin-bottom: 5px;
             }
 
             ul{
@@ -213,6 +233,7 @@ if ($bEntradaOK) {
                 margin-bottom: 10px;
             }
             input[type="text"], input[type="password"]{
+                width: 200px;
                 border: none;
                 padding: 10px;
                 border-bottom: 1px solid indigo;
@@ -226,11 +247,10 @@ if ($bEntradaOK) {
 
             }
             
-            
             input.button.password{
-                color: teal;
-                border: 2px solid teal;
-                background-color: paleturquoise;
+                color: ghostwhite;
+                border: 2px solid ghostwhite;
+                background-color: indigo;
             }
             input.button.password:hover{
                 color: indigo;
@@ -238,16 +258,16 @@ if ($bEntradaOK) {
                 background-color: ghostwhite;
             }
             
-            /*
             label.obligatorio:after{
                 content: "*";
                 color: teal;
             }
-            */
             .error{
                 color: indigo;
                 font-size: small;
             }
+            
+            
         </style>
     </head>
     <body>
@@ -257,6 +277,21 @@ if ($bEntradaOK) {
         </header>
         <main>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post'>
+                <?php
+                /**
+                * Si se ha pedido eliminar cuenta, muestra la confirmación de envío del
+                * formulario.
+                */
+               if(isset($_REQUEST['confirmacionEliminarCuenta'])){
+                   ?>
+                   <fieldset class="confirmacionEliminarCuenta">
+                       <div>¿Está seguro de borrar la cuenta?</div>
+                       <input class="button" type='submit' name='cancelarEliminarCuenta' value='Cancelar'/>
+                       <input class="button" type='submit' name='eliminarCuenta' value='Aceptar'/>
+                   </fieldset>
+                   <?php
+               }
+                ?>
                 <fieldset>
                     <ul>
                         <li><label for='usuario' >Nombre de usuario</label></li>
@@ -285,6 +320,7 @@ if ($bEntradaOK) {
                         <li><?php echo $aErrores['imagenUsuario'] ?></li>
                     </ul>
                     <ul>
+                        <li>Contraseña</li>
                         <li><input class="button password" type='submit' name='cambiarPassword' value='Cambiar contraseña'/></li>
                         <li>
                         <?php
@@ -300,9 +336,12 @@ if ($bEntradaOK) {
                         </li>
                     </ul>
                 </fieldset>
-                <input class="button" type='submit' name='cancelar' value='Cancelar'/>
-                <input class="button" type='submit' name='editarPerfil' value='Efectuar cambios'/>
-                <input class="button" type='submit' name='eliminarCuenta' value='Eliminar cuenta'/>
+                <fieldset>
+                    <input class="button" type='submit' name='cancelar' value='Cancelar'/>
+                    <input class="button" type='submit' name='editarPerfil' value='Efectuar cambios'/>
+                    <input class="button" type='submit' name='confirmacionEliminarCuenta' value='Eliminar cuenta'/>
+                </fieldset>
+                
             </form>
         </main>
 <?php include_once './elementoFooter.php'; //Footer         ?>

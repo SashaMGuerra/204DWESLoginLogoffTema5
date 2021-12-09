@@ -117,7 +117,7 @@ if ($bEntradaOK) {
         // Query de actualización.
         $sUpdate = <<<QUERY
             UPDATE T01_Usuario SET T01_NumConexiones=T01_NumConexiones+1,
-            T01_FechaHoraUltimaConexion = unix_timestamp(now())
+            T01_FechaHoraUltimaConexion = unix_timestamp()
             WHERE T01_CodUsuario='{$aFormulario['usuario']}';
         QUERY;
 

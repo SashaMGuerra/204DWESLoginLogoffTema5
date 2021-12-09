@@ -9,6 +9,13 @@
  * Comprueba si la combinación usuario-contraseña introducidos existen en la base
  * de datos, y si no es así, lo pide de nuevo.
  */
+/*
+ * Si se quiere registrar, va a la página de registro.
+ */
+if (isset($_REQUEST['registro'])) {
+    header('Location: registro.php');
+    exit;
+}
 
 require_once '../core/libreriaValidacion.php'; // Librería de validación.
 require_once '../config/configApp.php'; // Constantes de validación.
@@ -66,13 +73,12 @@ if (isset($_REQUEST['login'])) {
              * información como atributo.
              */
             $oResultado = $oResultadoSelect->fetchObject();
-            
         } catch (PDOException $exception) {
             /*
-            * Si sucede alguna excepción, envía al usuario al login.
-            */
-           header('Location: login.php');
-           exit;
+             * Si sucede alguna excepción, envía al usuario al login.
+             */
+            header('Location: login.php');
+            exit;
         } finally {
             unset($oDB);
         }
@@ -90,8 +96,7 @@ if (isset($_REQUEST['login'])) {
 /*
  * Si el formulario no ha sido enviado, pone el manejador de errores
  * a false para poder mostrar el formulario.
- */
-else {
+ */ else {
     $bEntradaOK = false;
 }
 
@@ -120,34 +125,34 @@ if ($bEntradaOK) {
         $oResultadoUpdate->execute();
     } catch (PDOException $exception) {
         /*
-        * Si sucede alguna excepción, envía al usuario al login.
-        */
-       header('Location: login.php');
-       exit;
+         * Si sucede alguna excepción, envía al usuario al login.
+         */
+        header('Location: login.php');
+        exit;
     } finally {
         unset($oDB);
     }
-    
+
     /* Inicio de la sesión para almacenar el código de usuario */
     session_start();
 
-    /* 
+    /*
      * Variables de sesión para el usuario.
      * 
      * Si el timestamp recogido es diferente a null, lo guarda formateado
      * porque en la ventana de detalle, si no, da error.
      */
     $_SESSION['usuarioDAW204AppLoginLogoff'] = $aFormulario['usuario'];
-    if(!is_null($oResultado->T01_FechaHoraUltimaConexion)){
+    if (!is_null($oResultado->T01_FechaHoraUltimaConexion)) {
         $oFecha = new DateTime();
         $oFecha->setTimestamp($oResultado->T01_FechaHoraUltimaConexion);
         $_SESSION['FechaHoraUltimaConexionAnterior'] = $oFecha->format('d/m/Y H:i:s T');
     }
     // Si no ha habido conexiones anteriores, pone la fecha de última conexión a null.
-    else{
+    else {
         $_SESSION['FechaHoraUltimaConexionAnterior'] = null;
     }
-    
+
     // Reenvío del usuario a la página de programa.
     header('Location: programa.php');
     exit;
@@ -185,18 +190,18 @@ if ($bEntradaOK) {
                     background-attachment: fixed;
                 }
             }
-            
+
             header{
                 background-color: rgb(75, 0, 130, 0.75); /* Indigo */
                 color: paleturquoise;
                 border-bottom: 3px solid teal;
-                
+
             }
             footer{
                 background-color: rgb(75, 0, 130, 0.75); /* Indigo */
                 border-top: 3px solid teal;
             }
-            
+
             form{
                 text-align: center;
                 padding: 10px 0 20px;
@@ -207,7 +212,7 @@ if ($bEntradaOK) {
             fieldset{
                 border: none;
             }
-            
+
             ul{
                 list-style: none;
                 margin: 0;
@@ -227,7 +232,7 @@ if ($bEntradaOK) {
                 content: "*";
                 color: paleturquoise;
             }
-            
+
             input.button{
                 background-color: paleturquoise;
             }
@@ -235,7 +240,7 @@ if ($bEntradaOK) {
     </head>
     <body>
         <header>
-            <?php include_once './elementoBtVolver.php'; // Botón de regreso         ?>
+<?php include_once './elementoBtVolver.php'; // Botón de regreso          ?>
             <h1>Acceso a la aplicación</h1>
         </header>
         <main>
@@ -251,8 +256,9 @@ if ($bEntradaOK) {
                     </ul>
                 </fieldset>
                 <input class="button" type='submit' name='login' value='Iniciar sesión'/>
+                <input class="button" type='submit' name='registro' value='Registrarse'/>
             </form>
         </main>
-        <?php include_once './elementoFooter.php'; //Footer      ?>
+<?php include_once './elementoFooter.php'; //Footer       ?>
     </body>
 </html>

@@ -7,6 +7,7 @@
  * Página principal.
  * Para acceder a ella se necesita haber hecho login.
  */
+
 /*
  * Comienzo de la sesión.
  * Si no se ha hecho login (la variable de sesión del usuario no está definida),
@@ -22,6 +23,12 @@ if (isset($_REQUEST['logout'])) {
     session_unset();
     session_destroy();
     header("Location: login.php");
+    exit;
+}
+
+// Si se decide editar perfil, accede a la página.
+if (isset($_REQUEST['editarPerfil'])) {
+    header("Location: editarPerfil.php");
     exit;
 }
 
@@ -107,7 +114,8 @@ try {
                 }
                 ?>.</div>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-                <input class="button" type="submit" name="detalle" value="detalle"/>
+                <input class="button" type="submit" name="detalle" value="Detalle"/>
+                <input class="button" type="submit" name="editarPerfil" value="Editar perfil"/>
                 <input class="button" type="submit" name="logout" value="Cerrar sesión"/>
             </form>
         </main>

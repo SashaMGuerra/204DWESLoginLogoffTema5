@@ -3,9 +3,13 @@ index ->    sin poner la ruta total, debe abrirse el index (LoginLogout/) (htacc
             
 login ->    botón ver password
 
+registro -> validarPassword en vez de validarAlfanumerico
+
+editarPerfil -> editar nombre de usuario
+
+
 ventana de error para los catch
     recuperar de la sesión el mensaje de error
 
 
 solucionar lo de 1&1
-continuar aplicación

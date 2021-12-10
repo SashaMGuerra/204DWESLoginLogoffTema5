@@ -54,11 +54,11 @@ if (isset($_REQUEST['eliminarCuenta'])) {
     } finally {
         unset($oDB);
     }
-    
+
     // Destrucción de la sesión.
     session_unset();
     session_destroy();
-   
+
     // Regreso a la página de login.
     header('Location: login.php?perfilEliminado=yes');
     exit;
@@ -132,7 +132,12 @@ if (isset($_REQUEST['editarPerfil'])) {
 
     // Si la descripción no cumple con lo especificado, mostrará el error.
     $aErrores['descripcion'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 255, 3, OBLIGATORIO);
-    $aErrores['imagenUsuario'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['imagenUsuario'], 255, 3);
+    /*
+     * El nombre de la imagen no puede contener caracteres diferentes a letras o
+     * números.
+     * La imagen debe ser menor a 2MG (tamaño máximo por defecto).
+     */
+    $aErrores['imagenUsuario'] = validacionFormularios::comprobarAlfaNumerico($_FILES['imagenUsuario']['name'], 255, 3);
     
     // Recorrido del array de errores. Si encuentra alguno pone el manejador a false.
     foreach ($aErrores as $sCampo => $sError) {
@@ -155,7 +160,20 @@ if (isset($_REQUEST['editarPerfil'])) {
 if ($bEntradaOK) {
     /* Recogida de información */
     $aFormulario['descripcion'] = $_REQUEST['descripcion'];
-    $aFormulario['imagenUsuario'] = $_REQUEST['imagenUsuario'];
+
+    /*
+     * Si se desea eliminar la imagen de usuario, lo rellena en el formulario
+     * como null.
+     * Si se ha subido una imagen, toma el archivo y lo codifica en base64 para 
+     * mostrarse como imagen.
+     */
+    if (isset($_REQUEST['eliminarImagenUsuario'])) {
+        $aFormulario['imagenUsuario'] = null;
+    } else if ($_FILES['imagenUsuario']['name'] != '') {
+        // Guarda la imagen codificada en base64 para poder mostrarse con <img>.
+        $aFormulario['imagenUsuario'] = base64_encode(file_get_contents($_FILES['imagenUsuario']['tmp_name']));
+    }
+
 
     try {
         // Conexión con la base de datos.
@@ -165,7 +183,7 @@ if ($bEntradaOK) {
         // Query de actualización.
         $sUpdate = <<<QUERY
             UPDATE T01_Usuario SET T01_DescUsuario = "{$aFormulario['descripcion']}",
-            T01_ImagenUsuario = "{$aFormulario['imagenUsuario']}"
+            T01_ImagenUsuario = '{$aFormulario['imagenUsuario']}'
             WHERE T01_CodUsuario = "{$aFormulario['usuario']}";
         QUERY;
 
@@ -205,7 +223,7 @@ include_once './idioma.php'; // Array de traducción de la web.
             fieldset{
                 border: none;
             }
-            
+
             /* Cuando existe fieldset.confirmacionEliminarCuenta, todos los fieldset
             hermanos que no son ese desaparecen.*/
             fieldset.confirmacionEliminarCuenta ~ fieldset:not([class='confirmacionEliminarCuenta']){
@@ -234,7 +252,7 @@ include_once './idioma.php'; // Array de traducción de la web.
             li{
                 margin-bottom: 10px;
             }
-            
+
             input[type="text"], input[type="password"]{
                 width: 200px;
                 border: none;
@@ -249,7 +267,7 @@ include_once './idioma.php'; // Array de traducción de la web.
                 border-bottom: 1px solid teal;
 
             }
-            
+
             input.button.password{
                 color: ghostwhite;
                 border: 2px solid ghostwhite;
@@ -260,7 +278,11 @@ include_once './idioma.php'; // Array de traducción de la web.
                 border: 2px solid indigo;
                 background-color: ghostwhite;
             }
-            
+
+            input[type="checkbox"] + label{
+                font-size: small;
+            }
+
             label.obligatorio:after{
                 content: "*";
                 color: teal;
@@ -269,8 +291,6 @@ include_once './idioma.php'; // Array de traducción de la web.
                 color: indigo;
                 font-size: small;
             }
-            
-            
         </style>
     </head>
     <body>
@@ -281,21 +301,21 @@ include_once './idioma.php'; // Array de traducción de la web.
             <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['editarPerfil'] ?></h1>
         </header>
         <main>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post' id="mainForm">
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post' id="mainForm" enctype="multipart/form-data">
                 <?php
                 /**
-                * Si se ha pedido eliminar cuenta, muestra la confirmación de envío del
-                * formulario.
-                */
-               if(isset($_REQUEST['confirmacionEliminarCuenta'])){
-                   ?>
-                   <fieldset class="confirmacionEliminarCuenta">
-                       <div>¿Está seguro de borrar la cuenta?</div>
-                       <input class="button" type='submit' name='cancelarEliminarCuenta' value='Cancelar'/>
-                       <input class="button" type='submit' name='eliminarCuenta' value='Aceptar'/>
-                   </fieldset>
-                   <?php
-               }
+                 * Si se ha pedido eliminar cuenta, muestra la confirmación de envío del
+                 * formulario.
+                 */
+                if (isset($_REQUEST['confirmacionEliminarCuenta'])) {
+                    ?>
+                    <fieldset class="confirmacionEliminarCuenta">
+                        <div>¿Está seguro de borrar la cuenta?</div>
+                        <input class="button" type='submit' name='cancelarEliminarCuenta' value='Cancelar'/>
+                        <input class="button" type='submit' name='eliminarCuenta' value='Aceptar'/>
+                    </fieldset>
+                    <?php
+                }
                 ?>
                 <fieldset>
                     <ul>
@@ -305,7 +325,7 @@ include_once './idioma.php'; // Array de traducción de la web.
                     <ul>
                         <li><label class="obligatorio" for='descripcion' >Nombre y apellidos</label></li>
                         <li><input class="obligatorio" type='text' name='descripcion' id='descripcion' value="<?php echo $aFormulario['descripcion'] ?? '' ?>"/></li>
-                        <li><?php echo $aErrores['descripcion'] ?></li>
+                        <li class="error"><?php echo $aErrores['descripcion'] ?></li>
                     </ul>
                     <ul>
                         <li><label for='numConexiones'>Número de conexiones</label></li>
@@ -321,19 +341,30 @@ include_once './idioma.php'; // Array de traducción de la web.
                     </ul>
                     <ul>
                         <li><label for='imagenUsuario' >Imagen de usuario</label></li>
-                        <li><input type='text' name='imagenUsuario' id='imagenUsuario' value="<?php echo $aFormulario['imagenUsuario'] ?? '' ?>"/></li>
-                        <li><?php echo $aErrores['imagenUsuario'] ?></li>
+                        <?php
+                        // Si el usuario tiene imagen de usuario, la muestra.
+                        if ($aFormulario['imagenUsuario']) {
+                            ?><li>
+                                <img src="data:image/jpg;base64, <?php echo $aFormulario['imagenUsuario'] ?>" width="300px" alt="imagen de usuario">
+                            </li>
+                            <li>
+                                <input type="checkbox" name="eliminarImagenUsuario" id="eliminarImagenUsuario" onclick="ocultarSubidaImagen(this)">
+                                <label for="eliminarImagenUsuario">¿Eliminar imagen de usuario?</label>
+                            </li>
+                            <?php }
+                        ?>
+                        <li><input type='file' name='imagenUsuario' id='imagenUsuario' accept=".jpg,.png"/></li>
+                        <li class="error"><?php echo $aErrores['imagenUsuario'] ?></li>
                     </ul>
                     <ul>
                         <li>Contraseña</li>
                         <li><input class="button password" type='submit' name='cambiarPassword' value='Cambiar contraseña'/></li>
                         <li class="info">
                         <?php
-                        if(isset($_REQUEST['passwordCambiada'])){
-                            if($_REQUEST['passwordCambiada']=='yes'){
+                        if (isset($_REQUEST['passwordCambiada'])) {
+                            if ($_REQUEST['passwordCambiada'] == 'yes') {
                                 echo 'La contraseña se ha cambiado.';
-                            }
-                            else if($_REQUEST['passwordCambiada']=='no'){
+                            } else if ($_REQUEST['passwordCambiada'] == 'no') {
                                 echo 'La contraseña no se ha cambiado.';
                             }
                         }
@@ -348,6 +379,15 @@ include_once './idioma.php'; // Array de traducción de la web.
                 </fieldset>
             </form>
         </main>
-<?php include_once './elementoFooter.php'; //Footer         ?>
+<?php include_once './elementoFooter.php'; //Footer          ?>
+        <script>
+            function ocultarSubidaImagen(checkbox) {
+                if (checkbox.checked) {
+                    document.getElementById('imagenUsuario').style.display = 'none';
+                } else {
+                    document.getElementById('imagenUsuario').style.display = 'initial';
+                }
+            }
+        </script>
     </body>
 </html>

@@ -48,7 +48,7 @@ try {
 
     // Query de selección.
     $sSelect = <<<QUERY
-        SELECT T01_DescUsuario, T01_NumConexiones FROM T01_Usuario
+        SELECT T01_DescUsuario, T01_NumConexiones, T01_ImagenUsuario FROM T01_Usuario
         WHERE T01_CodUsuario='{$_SESSION['usuarioDAW204AppLoginLogoff']}';
     QUERY;
 
@@ -77,15 +77,49 @@ include_once './idioma.php'; // Array de traducción de la web.
         <title>Página principal - LoginLogoutTema5</title>
         <link href="../webroot/css/commonLoginLogoffTema5.css" rel="stylesheet" type="text/css"/>
         <style>
-            form{
-                text-align: center;
-                margin: 10px;
+            main{
+                margin-left: auto; margin-right: auto;
+                display: flex;
+                gap: 10px;
             }
+            section{
+                margin: 5px;
+                margin-top: 0;
+            }
+            
+            @media (max-width: 650px){
+                main{
+                    flex-flow: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+                section:last-of-type{
+                    order: -1;
+                }
+            }
+
             div.bienvenida{
                 text-align: justify;
             }
             span.user{
                 font-weight: bold;
+            }
+
+            form{
+                text-align: center;
+                margin: 10px;
+            }
+
+            section:last-of-type div{
+                font-size: large;
+                font-variant: small-caps;
+                font-weight: bold;
+                text-align: center;
+            }
+            section:last-of-type img{
+                max-width: 250px;
+                max-height: 500px;
+                border-radius: 5px;
             }
         </style>
     </head>
@@ -97,30 +131,41 @@ include_once './idioma.php'; // Array de traducción de la web.
             <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['programa'] ?></h1>
         </header>
         <main>
-            <div class="bienvenida">Bienvenido <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
-                if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
-                    ?> y su última conexión fue <?php
-                    echo $_SESSION['FechaHoraUltimaConexionAnterior'];
-                }
-                ?>.</div>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="mainForm">
-                <input class="button" type="submit" name="detalle" value="Detalle"/>
-                <input class="button" type="submit" name="editarPerfil" value="Editar perfil"/>
-                <input class="button" type="submit" name="logout" value="Cerrar sesión"/>
-            </form>
-            <div class="info">
-                <?php
-                if (isset($_REQUEST['perfilEditado'])) {
-                    if ($_REQUEST['perfilEditado'] == 'yes') {
-                        echo 'Perfil editado con éxito.';
-                    } else if ($_REQUEST['perfilEditado'] == 'no') {
-                        echo 'No se ha editado el perfil.';
+            <section>
+                <div class="bienvenida">Bienvenido <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
+                    if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
+                        ?> y su última conexión fue <?php
+                        echo $_SESSION['FechaHoraUltimaConexionAnterior'];
                     }
-                }
-                ?>
-            </div>
+                    ?>.</div>
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="mainForm">
+                    <input class="button" type="submit" name="detalle" value="Detalle"/>
+                    <input class="button" type="submit" name="editarPerfil" value="Editar perfil"/>
+                    <input class="button" type="submit" name="logout" value="Cerrar sesión"/>
+                </form>
+                <div class="info">
+                    <?php
+                    if (isset($_REQUEST['perfilEditado'])) {
+                        if ($_REQUEST['perfilEditado'] == 'yes') {
+                            echo 'Perfil editado con éxito.';
+                        } else if ($_REQUEST['perfilEditado'] == 'no') {
+                            echo 'No se ha editado el perfil.';
+                        }
+                    }
+                    ?>
+                </div>
+            </section>
+            <section>
+                <?php // Si el usuario tiene imagen de usuario, la muestra. Si no, muestra una de las de por defecto.
+                if ($oResultado->T01_ImagenUsuario) { ?>
+                    <img src="data:image/jpg;base64, <?php echo $oResultado->T01_ImagenUsuario ?>" alt="imagen de usuario">
+                <?php } else{ ?>
+                    <script>document.write(`<img src="../webroot/media/img/randomDefault/${Math.floor(Math.random()*5)}.jpg" alt="imagen de usuario"/>`);</script>
+                <?php } ?>
+                <div><?php echo $_SESSION['usuarioDAW204AppLoginLogoff'] ?></div>
+            </section>
 
         </main>
-<?php include_once './elementoFooter.php'; //Footer    ?>
+<?php include_once './elementoFooter.php'; //Footer     ?>
     </body>
 </html>

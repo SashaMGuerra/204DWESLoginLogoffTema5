@@ -34,7 +34,7 @@ if (isset($_REQUEST['registro'])) {
      */
     if (validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 8, 4, OBLIGATORIO) ||
         validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 255, 3, OBLIGATORIO) ||
-            validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 8, 4, OBLIGATORIO)) {
+            validacionFormularios::validarPassword($_REQUEST['password'], 8, 4, 1)) {
         $bEntradaOK = false;
         $sError = 'Tanto el usuario como la contraseña deben tener entre 8 y 4 caracteres.<br>Nombre y apellidos deben tener mínimo 3 caracteres.';
     }
@@ -139,12 +139,14 @@ if ($bEntradaOK) {
     header('Location: programa.php');
     exit;
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Login - LoginLogoutTema5</title>
+        <title>Registro de usuario - LoginLogoutTema5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../webroot/css/commonLoginLogoffTema5.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -185,7 +187,7 @@ if ($bEntradaOK) {
     <body>
         <header>
             <?php include_once './elementoBtVolver.php'; // Botón de regreso ?>
-            <h1>Creación de usuario</h1>
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['registro'] ?></h1>
         </header>
         <main>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post'>

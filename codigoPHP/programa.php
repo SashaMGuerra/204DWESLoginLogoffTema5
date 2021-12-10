@@ -7,9 +7,8 @@
  * Página principal.
  * Para acceder a ella se necesita haber hecho login.
  */
-
 /*
- * Comienzo de la sesión.
+ * Recuperación de la sesión.
  * Si no se ha hecho login (la variable de sesión del usuario no está definida),
  * devuelve al usuario a la página para hacerlo.
  */
@@ -49,7 +48,7 @@ try {
 
     // Query de selección.
     $sSelect = <<<QUERY
-        SELECT T01_NumConexiones FROM T01_Usuario
+        SELECT T01_DescUsuario, T01_NumConexiones FROM T01_Usuario
         WHERE T01_CodUsuario='{$_SESSION['usuarioDAW204AppLoginLogoff']}';
     QUERY;
 
@@ -58,7 +57,6 @@ try {
     $oResultadoSelect->execute();
 
     $oResultado = $oResultadoSelect->fetchObject();
-    
 } catch (PDOException $exception) {
     /*
      * Mostrado del código de error y su mensaje.
@@ -69,6 +67,8 @@ try {
 } finally {
     unset($oDB);
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,34 +91,36 @@ try {
     </head>
     <body>
         <header>
-            <a class="volver" href="login.php"><img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver"></a>        
-            <h1>Proyecto Login-Logout</h1>
+            <button class="volver" form="mainForm" type="submit" name="logout" value="Volver">
+                <img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver">
+            </button>  
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['programa'] ?></h1>
         </header>
         <main>
-            <div class="bienvenida"><?php 
-                switch($_COOKIE['idiomaPreferido']){
-                    case 'ES':
-                        echo 'Bienvenido';
-                        break;
-                    case 'EN':
-                        echo 'Welcome';
-                        break;
-                    case 'PT':
-                        echo 'Bem-vindo';
-                        break;
-                }
-            ?> <span class="user"><?php echo $_SESSION['usuarioDAW204AppLoginLogoff'] ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
+            <div class="bienvenida">Bienvenido <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
                 if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
                     ?> y su última conexión fue <?php
                     echo $_SESSION['FechaHoraUltimaConexionAnterior'];
                 }
                 ?>.</div>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="mainForm">
                 <input class="button" type="submit" name="detalle" value="Detalle"/>
                 <input class="button" type="submit" name="editarPerfil" value="Editar perfil"/>
                 <input class="button" type="submit" name="logout" value="Cerrar sesión"/>
             </form>
+            <div class="info">
+                <?php
+                if (isset($_REQUEST['perfilEditado'])) {
+                    if ($_REQUEST['perfilEditado'] == 'yes') {
+                        echo 'Perfil editado con éxito.';
+                    } else if ($_REQUEST['perfilEditado'] == 'no') {
+                        echo 'No se ha editado el perfil.';
+                    }
+                }
+                ?>
+            </div>
+
         </main>
-        <?php include_once './elementoFooter.php'; //Footer   ?>
+<?php include_once './elementoFooter.php'; //Footer    ?>
     </body>
 </html>

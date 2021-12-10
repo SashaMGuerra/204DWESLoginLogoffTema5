@@ -1,15 +1,10 @@
 index ->    sin poner la ruta total, debe abrirse el index (LoginLogout/) (htaccess)
-            enlace al índice principal de 1&1
             
 login ->    botón ver password
 
-registro -> validarPassword en vez de validarAlfanumerico
+editarPerfil -> imagen del usuario: mostrar y cambiar
 
-editarPerfil -> editar nombre de usuario
-
+el nombre de la aplicación se tiene que ver siempre
 
 ventana de error para los catch
     recuperar de la sesión el mensaje de error
-
-
-solucionar lo de 1&1

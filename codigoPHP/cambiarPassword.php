@@ -7,7 +7,7 @@
  * Página de edición del perfil del usuario.
  */
 /*
- * Continuación de la sesión.
+ * Recuperación de la sesión.
  * Si no se ha hecho login (la variable de sesión del usuario no está definida),
  * devuelve al usuario a la página para hacerlo.
  */
@@ -151,12 +151,14 @@ if ($bEntradaOK) {
     header('Location: editarPerfil.php?passwordCambiada=yes');
     exit;
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Login - LoginLogoutTema5</title>
+        <title>Cambio de contraseña - LoginLogoutTema5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../webroot/css/commonLoginLogoffTema5.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -202,11 +204,13 @@ if ($bEntradaOK) {
     </head>
     <body>
         <header>
-            <a class="volver" href="editarPerfil.php"><img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver"></a>        
-            <h1>Cambio de contraseña</h1>
+            <button class="volver" form="mainForm" type="submit" name="cancelar" value="Volver">
+                <img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver">
+            </button>   
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['cambiarPassword'] ?></h1>
         </header>
         <main>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post'>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post' id="mainForm">
                 <fieldset>
                     <ul>
                         <li><label class='obligatorio' for='passwordActual' >Contraseña actual</label></li>

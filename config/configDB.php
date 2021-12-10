@@ -28,7 +28,6 @@ define('PASSWORD', 'paso');
  * 
  */
 
-
 /*
 // Explotación - 1 & 1;
 define('HOST', 'mysql:host=db5005797392.hosting-data.io;dbname=dbs4868794');

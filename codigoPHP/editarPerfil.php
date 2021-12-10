@@ -99,7 +99,7 @@ try {
 
     // Query de selección.
     $sSelect = <<<QUERY
-        SELECT T01_DescUsuario, T01_NumConexiones, T01_Perfil, T01_ImagenUsuario FROM T01_Usuario
+        SELECT * FROM T01_Usuario
         WHERE T01_CodUsuario='{$aFormulario['usuario']}';
     QUERY;
 
@@ -186,6 +186,8 @@ if ($bEntradaOK) {
     header('Location: programa.php?perfilEditado=yes');
     exit;
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
@@ -232,6 +234,7 @@ if ($bEntradaOK) {
             li{
                 margin-bottom: 10px;
             }
+            
             input[type="text"], input[type="password"]{
                 width: 200px;
                 border: none;
@@ -272,11 +275,13 @@ if ($bEntradaOK) {
     </head>
     <body>
         <header>
-            <a class="volver" href="programa.php"><img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver"></a>        
-            <h1>Creación de usuario</h1>
+            <button class="volver" form="mainForm" type="submit" name="cancelar" value="Volver">
+                <img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver">
+            </button>     
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['editarPerfil'] ?></h1>
         </header>
         <main>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post'>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post' id="mainForm">
                 <?php
                 /**
                 * Si se ha pedido eliminar cuenta, muestra la confirmación de envío del
@@ -322,7 +327,7 @@ if ($bEntradaOK) {
                     <ul>
                         <li>Contraseña</li>
                         <li><input class="button password" type='submit' name='cambiarPassword' value='Cambiar contraseña'/></li>
-                        <li>
+                        <li class="info">
                         <?php
                         if(isset($_REQUEST['passwordCambiada'])){
                             if($_REQUEST['passwordCambiada']=='yes'){
@@ -341,7 +346,6 @@ if ($bEntradaOK) {
                     <input class="button" type='submit' name='editarPerfil' value='Efectuar cambios'/>
                     <input class="button" type='submit' name='confirmacionEliminarCuenta' value='Eliminar cuenta'/>
                 </fieldset>
-                
             </form>
         </main>
 <?php include_once './elementoFooter.php'; //Footer         ?>

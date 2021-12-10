@@ -9,7 +9,6 @@
  * Comprueba si la combinación usuario-contraseña introducidos existen en la base
  * de datos, y si no es así, lo pide de nuevo.
  */
-
 /*
  * Si se quiere registrar, va a la página de registro.
  */
@@ -39,15 +38,13 @@ if (isset($_REQUEST['login'])) {
      * Si el usuario y/o password no está definido, o si se ha introducido de
      * forma incorrecta, pone la entrada como incorrecta.
      */
-    if (validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 8, 4, OBLIGATORIO)
-            || validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 8, 4, OBLIGATORIO)) {
+    if (validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 8, 4, OBLIGATORIO) || validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 8, 4, OBLIGATORIO)) {
         $bEntradaOK = false;
     }
     /**
      * Si no existe ningún error por el momento, comprueba que el usuario y la
      * contraseña existan y sean correctos en la base de datos.
-     */
-    else {
+     */ else {
         /* Recogida de información */
         $aFormulario['usuario'] = $_REQUEST['usuario'];
         $aFormulario['password'] = $_REQUEST['password'];
@@ -158,6 +155,8 @@ if ($bEntradaOK) {
     header('Location: programa.php');
     exit;
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
@@ -237,12 +236,20 @@ if ($bEntradaOK) {
             input.button{
                 background-color: paleturquoise;
             }
+            
+            div.info{
+                font-weight: bold;
+                font-size: large;
+                background-color: paleturquoise;
+                max-width: 300px;
+                margin: auto;
+            }
         </style>
     </head>
     <body>
         <header>
-<?php include_once './elementoBtVolver.php'; // Botón de regreso          ?>
-            <h1>Acceso a la aplicación</h1>
+<?php include_once './elementoBtVolver.php'; // Botón de regreso           ?>
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['login'] ?></h1>
         </header>
         <main>
             <form action='login.php' method='post'>
@@ -259,7 +266,17 @@ if ($bEntradaOK) {
                 <input class="button" type='submit' name='login' value='Iniciar sesión'/>
                 <input class="button" type='submit' name='registro' value='Registrarse'/>
             </form>
+            <div class="info">
+                <?php
+                if (isset($_REQUEST['perfilEliminado'])) {
+                    if ($_REQUEST['perfilEliminado'] == 'yes') {
+                        echo 'Se ha eliminado la cuenta.';
+                    }
+                }
+                ?>
+            </div>
+            
         </main>
-<?php include_once './elementoFooter.php'; //Footer       ?>
+                <?php include_once './elementoFooter.php'; //Footer       ?>
     </body>
 </html>

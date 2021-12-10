@@ -139,6 +139,8 @@ if ($bEntradaOK) {
     header('Location: programa.php');
     exit;
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
@@ -185,7 +187,7 @@ if ($bEntradaOK) {
     <body>
         <header>
             <?php include_once './elementoBtVolver.php'; // Botón de regreso ?>
-            <h1>Creación de usuario</h1>
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['registro'] ?></h1>
         </header>
         <main>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post'>

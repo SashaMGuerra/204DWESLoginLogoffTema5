@@ -15,6 +15,8 @@ session_start();
 if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
     header('Location: login.php');
 }
+
+include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,7 +40,7 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
     <body>
         <header>
             <a class="volver" href="programa.php"><img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver"></a>        
-            <h1>Variables superglobales y phpinfo()</h1>
+            <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['detalle'] ?></h1>
         </header>
         <main>
             <h2>$_SESSION</h2>

@@ -21,7 +21,7 @@ header{
     position: relative;
 }
 /*Botón volver*/
-a.volver{
+.volver{
     background-color: paleturquoise;
     display: flex;
     justify-content: center;
@@ -29,17 +29,19 @@ a.volver{
     position: absolute;
     height: 100%;
     width: 80px;
+    border: none;
+    cursor: pointer;
 }
-a.volver img{
+.volver img{
     height: 70%;
 }
-a.volver .hover{
+.volver .hover{
     display: none;
 }
-a.volver:hover > img.hover{
+.volver:hover > img.hover{
     display: block;
 }
-a.volver:hover > img.normal{
+.volver:hover > img.normal{
     display: none;
 }
 
@@ -86,6 +88,14 @@ footer > div{
     position: relative;
     bottom: 8px;
 }
+footer a{
+    color: paleturquoise;
+    text-decoration: underline;
+}
+footer a:hover, footer a:active{
+    color: teal;
+}
+
 
 /*Botones*/
 .button{
@@ -103,10 +113,17 @@ footer > div{
     color: paleturquoise;
     border: 2px solid paleturquoise;
     background-color: teal;
-    
+
 }
 
 /*Enlaces*/
 a{
     text-decoration: none;
+}
+
+/* Cuadros de información de cambios */
+.info{
+    color: indigo;
+    font-size: small;
+    text-align: center;
 }

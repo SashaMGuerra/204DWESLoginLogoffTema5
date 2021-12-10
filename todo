@@ -4,10 +4,7 @@ login ->    botón ver password
 
 editarPerfil -> imagen del usuario: mostrar y cambiar
 
-configApp -> datos de los idiomas como array de arrays.
-
-
-traducir título mediante la cookie
+el nombre de la aplicación se tiene que ver siempre
 
 ventana de error para los catch
     recuperar de la sesión el mensaje de error

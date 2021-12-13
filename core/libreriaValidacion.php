@@ -51,6 +51,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param boolean $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
+
     public static function comprobarAlfabetico($cadena, $maxTamanio = 1000, $minTamanio = 1, $obligatorio = 0) {  //AÑADIDOS VALORES POR DEFECTO Y MEJORADA LA RESPUESTA
         // Patrón para campos de solo texto
         $patron_texto = "/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙñÑ\s]+$/";
@@ -61,7 +62,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
         if ($obligatorio == 1) {
             $mensajeError = self::comprobarNoVacio($cadena);
         }
-        
+
         //Comprobación de que la cadena introducida coincide con la sintaxis permitida del patrón
         if (!preg_match($patron_texto, $cadena) && !empty($cadena)) {
             $mensajeError = " Solo se admiten letras.";
@@ -74,6 +75,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
 // Función para comprobar un campo AlfaNumerico
 // Return nada si es correcto, si hay errores devuelve un mensaje de error
 // Si es un 1 es obligatorio, si es un 0 no lo es
+
     /**
      * Funcion comprobarAlfaNumerico
      * 
@@ -99,12 +101,12 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
         $mensajeError .= self::comprobarMaxTamanio($cadena, $maxTamanio);
         $mensajeError .= self::comprobarMinTamanio($cadena, $minTamanio);
         return $mensajeError;
-       
     }
 
 // Función para comprobar si es un campo entero
 // Return null es correcto, si no muestra el mensaje de error
 // Si es un 1 es obligatorio, si es un 0 no lo es
+
     /**
      * 
      * Funcion comprobarEntero
@@ -119,33 +121,34 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null en el caso en el que esté correcto, si no devuelve una cadena con el mensaje de error.
      */
-    public static function comprobarEntero($integer, $max = PHP_INT_MAX, $min = -PHP_INT_MAX, $obligatorio = 0){  //AÑADIDOS VALORES POR DEFECTO Y AHORA DETECTA EL 0
+    public static function comprobarEntero($integer, $max = PHP_INT_MAX, $min = -PHP_INT_MAX, $obligatorio = 0) {  //AÑADIDOS VALORES POR DEFECTO Y AHORA DETECTA EL 0
         $mensajeError = null;
-        
+
         if ($obligatorio == 1 && $integer != '0') {
             $mensajeError = self::comprobarNoVacio($integer);
         }
-        
-        if(($obligatorio == 0 && $integer!=null) || ($obligatorio == 1 && empty($mensajeError))){//COMPROBAMOS QUE SI ES OPCIONAL, NO ESTÉ VACÍO Y SI ES OBLIGATORIO QUE NO HAYA GUARDADO UN MENSAJE DE ERROR ANTERIOR (QUE EL CAMPO NO ESTÉ VACÍO)  
-            $integer = str_replace('.', ',', $integer);//SI SE HA INTRODUCIDO UN NÚMERO CON '.'(FLOAT), SUSTITUIMOS EL PUNTO POR UNA COMA PARA QUE SEA UN STRING
-            if (!is_numeric($integer)){ //SI NO ES UN NÚMERO O STRING NUMÉRICO
+
+        if (($obligatorio == 0 && $integer != null) || ($obligatorio == 1 && empty($mensajeError))) {//COMPROBAMOS QUE SI ES OPCIONAL, NO ESTÉ VACÍO Y SI ES OBLIGATORIO QUE NO HAYA GUARDADO UN MENSAJE DE ERROR ANTERIOR (QUE EL CAMPO NO ESTÉ VACÍO)  
+            $integer = str_replace('.', ',', $integer); //SI SE HA INTRODUCIDO UN NÚMERO CON '.'(FLOAT), SUSTITUIMOS EL PUNTO POR UNA COMA PARA QUE SEA UN STRING
+            if (!is_numeric($integer)) { //SI NO ES UN NÚMERO O STRING NUMÉRICO
                 $mensajeError = "El campo no es un entero. ";
-            }else{
-                if($integer>$max){
-                    $mensajeError = $mensajeError."El número no puede ser mayor que ".$max.".";
+            } else {
+                if ($integer > $max) {
+                    $mensajeError = $mensajeError . "El número no puede ser mayor que " . $max . ".";
                 }
-                if($integer<$min){
-                    $mensajeError = $mensajeError."El número no puede ser menor que ".$min.".";
+                if ($integer < $min) {
+                    $mensajeError = $mensajeError . "El número no puede ser menor que " . $min . ".";
                 }
             }
         }
-        
+
         return $mensajeError;
     }
 
 // Función para comprobar si es un campo float
 // Return null es correcto, si no muestra el mensaje de error
 // Si es un 1 es obligatorio, si es un 0 no lo es
+
     /**
      * Funcion comprobarFloat
      * 
@@ -159,21 +162,21 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param boolean $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null en el caso en el que esté correcto, si no devuelve una cadena con el mensaje de error.
      */
-    public static function comprobarFloat($float, $max = PHP_FLOAT_MAX, $min = -PHP_FLOAT_MAX, $obligatorio = 0){  //AÑADIDOS VALORES POR DEFECTO Y AHORA DETECTA 0
+    public static function comprobarFloat($float, $max = PHP_FLOAT_MAX, $min = -PHP_FLOAT_MAX, $obligatorio = 0) {  //AÑADIDOS VALORES POR DEFECTO Y AHORA DETECTA 0
         $mensajeError = null;
         if ($obligatorio == 1 && $float != '0') {
             $mensajeError = self::comprobarNoVacio($float);
         }
-        
-        if(($obligatorio == 0 && $float!=null) || ($obligatorio == 1 && empty($mensajeError))){//COMPROBAMOS QUE SI ES OPCIONAL, NO ESTÉ VACÍO Y SI ES OBLIGATORIO QUE NO HAYA GUARDADO UN MENSAJE DE ERROR ANTERIOR (QUE EL CAMPO NO ESTÉ VACÍO)   
+
+        if (($obligatorio == 0 && $float != null) || ($obligatorio == 1 && empty($mensajeError))) {//COMPROBAMOS QUE SI ES OPCIONAL, NO ESTÉ VACÍO Y SI ES OBLIGATORIO QUE NO HAYA GUARDADO UN MENSAJE DE ERROR ANTERIOR (QUE EL CAMPO NO ESTÉ VACÍO)   
             if (!is_numeric($float)) {//SI NO ES UN NÚMERO O STRING NUMÉRICO
-                $mensajeError = "El campo no es un decimal. (Debe llevar punto(.) entre la parte entera y la parte decimal)";   
-            }else{
-                if($float>$max){
-                    $mensajeError = $mensajeError."El número no puede ser mayor que ".$max.".";
+                $mensajeError = "El campo no es un decimal. (Debe llevar punto(.) entre la parte entera y la parte decimal)";
+            } else {
+                if ($float > $max) {
+                    $mensajeError = $mensajeError . "El número no puede ser mayor que " . $max . ".";
                 }
-                if($float<$min){
-                    $mensajeError = $mensajeError."El número no puede ser menor que ".$min.".";
+                if ($float < $min) {
+                    $mensajeError = $mensajeError . "El número no puede ser menor que " . $min . ".";
                 }
             }
         }
@@ -183,6 +186,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
 // Función para comprobar si es un correo electronico
 // Return nada si es correcto, si hay errores devuelve un mensaje de error
 // Si es un 1 es obligatorio, si es un 0 no lo es
+
     /**
      * Funcion validarEmail
      * 
@@ -214,6 +218,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
 // Función para comprobar si es una url, local o no
 // Devuelve null si es correcto, sino muestra el mensaje de error
 // Si el parámetro $obligatorio es un 1 es obligatorio, si es un 0 es opcional
+
     /**
      * Funcion validarURL
      * 
@@ -227,11 +232,11 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
     public static function validarURL($url, $obligatorio = 0) { //MEJORADA LA RESPUESTA Y ASIGNADO VALOR POR DEFECTO
         $mensajeError = null;
         if ($obligatorio == 1) {
-            $mensajeError = self::comprobarNoVacio($url); 
+            $mensajeError = self::comprobarNoVacio($url);
         }
-        if (!filter_var($url, FILTER_VALIDATE_URL) && !empty($url)){
+        if (!filter_var($url, FILTER_VALIDATE_URL) && !empty($url)) {
             $mensajeError = "Formato incorrecto de URL.";
-        }        
+        }
         return $mensajeError;
     }
 
@@ -258,7 +263,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
         if (is_bool($fechaFormateada) && !empty($fecha)) {
             $mensajeError = " Formato incorrecto de fecha (Año-Mes-dia) (2000-01-01).";
         } else {
-            if(!empty($fecha) && ($fechaFormateada < $fechaMinima) || ($fechaFormateada > $fechaMaxima)){
+            if (!empty($fecha) && ($fechaFormateada < $fechaMinima) || ($fechaFormateada > $fechaMaxima)) {
                 $mensajeError = " Por favor introduzca una fecha entre " . date('d/m/Y', $fechaMinima) . " y " . date('d/m/Y', $fechaMaxima) . ".";
             }
         }
@@ -283,12 +288,12 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
         if ($obligatorio == 1) {
             $mensajeError = self::comprobarNoVacio($dni);
         }
-        if(!is_numeric($letra) && is_numeric($numeros)){
+        if (!is_numeric($letra) && is_numeric($numeros)) {
             if ((substr("TRWAGMYFPDXBNJZSQVHLCKE", $numeros % 23, 1) != $letra || strlen($letra) != 1 || strlen($numeros) != 8) && !empty($dni)) {
                 $mensajeError = " El DNI no es válido.";
             }
-        }else{
-            if(!empty($dni)){
+        } else {
+            if (!empty($dni)) {
                 $mensajeError = " El DNI no es válido.";
             }
         }
@@ -296,6 +301,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
     }
 
     // Valida el código postal, si es opcional da por válido que sea correcto o este vacío, si es obligatorio solo da por válido que esté correcto
+
     /**
      * Funcion validarFecha
      * 
@@ -307,19 +313,20 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param boolean $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
-    public static function validarCp($cp, $obligatorio = 0){  //AÑADIDO PARAMETRO INDEFINIDO Y SALIDA MEJORADA
+    public static function validarCp($cp, $obligatorio = 0) {  //AÑADIDO PARAMETRO INDEFINIDO Y SALIDA MEJORADA
         $mensajeError = null;
         if ($obligatorio == 1) {
             $mensajeError = self::comprobarNoVacio($cp);
         }
 
-        if (!preg_match('/^[0-9]{5}$/i', $cp) && !empty($cp)){
-            $mensajeError=" El código postal no es válido.";
+        if (!preg_match('/^[0-9]{5}$/i', $cp) && !empty($cp)) {
+            $mensajeError = " El código postal no es válido.";
         }
         return $mensajeError;
     }
 
     // Valida el password, comprueba longitud y si al menos contiene una mayúscula y un número, si es opcional da por válido que sea correcto o este vacío, si es obligatorio solo da por válido que esté correcto
+
     /**
      * Funcion validarPassword
      * 
@@ -335,19 +342,19 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param boolean $obligatorio valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
-    public static function validarPassword($passwd, $maximo=16, $minimo = 2, $tipo=3, $obligatorio = 1) {  //CAMBIADO ORDEN DE LOS PARAMETROS, AÑADIDOS PARAMETROS PREDEFINIDOS Y MEJORADA LA RESPUESTA
+    public static function validarPassword($passwd, $maximo = 16, $minimo = 2, $tipo = 3, $obligatorio = 1) {  //CAMBIADO ORDEN DE LOS PARAMETROS, AÑADIDOS PARAMETROS PREDEFINIDOS Y MEJORADA LA RESPUESTA
         $mensajeError = null;
         if ($obligatorio == 1) {
-            $mensajeError = self::comprobarNoVacio($passwd); 
+            $mensajeError = self::comprobarNoVacio($passwd);
         }
-        if (strlen($passwd) < $minimo && !empty($passwd)){
+        if (strlen($passwd) < $minimo && !empty($passwd)) {
             $mensajeError = " La contraseña debe ser de al menos " . $minimo . " caracteres.";
         }
-        if (strlen($passwd) > $maximo && !empty($passwd)){
+        if (strlen($passwd) > $maximo && !empty($passwd)) {
             $mensajeError = " La contraseña debe tener como maximo " . $maximo . " caracteres.";
         }
-        if(!empty($passwd) && $mensajeError==null){
-            switch ($tipo){
+        if (!empty($passwd) && $mensajeError == null) {
+            switch ($tipo) {
                 case 1:
                     $mensajeError = self::comprobarAlfabetico($passwd, $maximo, $minimo, $obligatorio);
                     break;
@@ -361,7 +368,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
                     break;
             }
         }
-        
+
         return $mensajeError;
     }
 
@@ -369,6 +376,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
 // Return null si está vacío el mensajeError, cadena con error si es que lo hay  
 // Función para validar si no esta vacio
 // Return false esta vacio, true no esta vacio
+
     /**
      * Funcion comprobarNoVacio
      * 
@@ -393,6 +401,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
 // Función para tamaño maximo
 // Si tamaño es 0 significa que no tiene limite
 // Return false no es correcto, true es correcta
+
     /**
      * Funcion comprobarMaxTamanio
      * 
@@ -416,6 +425,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
 // Función para tamaño minimo
 // Si el tamaño es 0 significa que no tiene limite
 // Return false no es correcto, true es correcta
+
     /**
      * Funcion comprobarMinTamanio
      * 
@@ -449,7 +459,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
     public static function validarElementoEnLista($elementoElegido, $aOpciones) {   //NO TIENE SENTIDO HACER UNA LISTA NO OBLIGATORIA
         $mensajeError = null; //Inicializa el mensaje de error a null.
 
-        if (!in_array($elementoElegido, $aOpciones)) { 
+        if (!in_array($elementoElegido, $aOpciones)) {
             $mensajeError = " El elemento no se encuentra entre los posibles valores.";
         }
         return $mensajeError; //Devuelve el mensaje de error.
@@ -469,17 +479,48 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param boolean $obligatorio valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es. 
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
-    
-    public static function validarTelefono($tel, $obligatorio = 0){ //AÑADIDO PARAMETRO POR DEFECTO, MEJORADA LA FUNCIONALIDAD Y LA SALIDA
-        $mensajeError=null;
-        $patron="/^[6|7|9][0-9]{8}$/";
-         if ($obligatorio == 1) {
+    public static function validarTelefono($tel, $obligatorio = 0) { //AÑADIDO PARAMETRO POR DEFECTO, MEJORADA LA FUNCIONALIDAD Y LA SALIDA
+        $mensajeError = null;
+        $patron = "/^[6|7|9][0-9]{8}$/";
+        if ($obligatorio == 1) {
             $mensajeError = self::comprobarNoVacio($tel);
         }
         if (!preg_match($patron, $tel) && !empty($tel)) {
             $mensajeError .= " El telefono debe comenzar por 6,7 o 9 y a continuación 8 dígitos del 0 al 9.";
         }
-        return $mensajeError; 
+        return $mensajeError;
+    }
+
+    /**
+     * Basada en validarAlfanumerico, esta función comprueba si el nombre de un
+     * archivo tiene una extensión válida entre un array de extensiones admitidas.
+     * 
+     * @author Isabel Martínez Guerra.
+     * @version 1.0 Creada la función.
+     * @since 2021-12-13
+     * @param string $nombreArchivo Cadena que se va a comprobar.
+     * @param array $aExtensiones Tamaño máximo de la cadena.
+     * @param int $maxTamanio Tamaño mínimo de la cadena.
+     * @param int $minTamanio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
+     * @param boolean $obligatorio
+     * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
+     */
+    public static function validarNombreArchivo($nombreArchivo, $aExtensiones, $maxTamanio = 150, $minTamanio = 1, $obligatorio = 0) {
+        // Validación del texto del nombre del archivo.
+        $mensajeError = self::comprobarAlfaNumerico($nombreArchivo, $maxTamanio, $minTamanio, $obligatorio);
+
+        /* Si el nombre de archivo no está vacío (es decir, se ha enviado uno),
+         * comprueba si la extensión está entre las admitidas.
+         * En el caso que el campo fuese obligatorio, ya se habría validado en la
+         * función comprobarAlfaNumerico.
+         */
+        if(!empty($nombreArchivo)){
+            $sExtension = substr($nombreArchivo, strpos($nombreArchivo, '.') + 1);
+            if (!in_array($sExtension, $aExtensiones)) {
+                $mensajeError = "El archivo no tiene una extensión válida. Sólo se admite ".implode(', ', $aExtensiones).".";
+            }
+        }
+        return $mensajeError;
     }
 }
 

@@ -68,7 +68,7 @@ try {
     unset($oDB);
 }
 
-include_once './idioma.php'; // Array de traducción de la web.
+include_once '../config/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
@@ -129,7 +129,7 @@ include_once './idioma.php'; // Array de traducción de la web.
         </header>
         <main>
             <section>
-                <div class="bienvenida">Bienvenido <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
+                <div class="bienvenida">Bienvenid@ <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
                     if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
                         ?> y su última conexión fue <?php
                         echo $_SESSION['FechaHoraUltimaConexionAnterior'];

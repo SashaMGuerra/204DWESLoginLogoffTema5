@@ -163,7 +163,7 @@ if ($bEntradaOK) {
     exit;
 }
 
-include_once './idioma.php'; // Array de traducción de la web.
+include_once '../config/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">

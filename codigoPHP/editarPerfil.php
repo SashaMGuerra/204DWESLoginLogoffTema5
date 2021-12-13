@@ -137,7 +137,7 @@ if (isset($_REQUEST['editarPerfil'])) {
      * números.
      * La imagen debe ser menor a 2MG (tamaño máximo por defecto).
      */
-    $aErrores['imagenUsuario'] = validacionFormularios::comprobarAlfaNumerico($_FILES['imagenUsuario']['name'], 255, 3);
+    $aErrores['imagenUsuario'] = validacionFormularios::validarNombreArchivo($_FILES['imagenUsuario']['name'],['jpg', 'jpeg', 'png'], 255, 3);
     
     // Recorrido del array de errores. Si encuentra alguno pone el manejador a false.
     foreach ($aErrores as $sCampo => $sError) {
@@ -205,7 +205,7 @@ if ($bEntradaOK) {
     exit;
 }
 
-include_once './idioma.php'; // Array de traducción de la web.
+include_once '../config/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
@@ -353,7 +353,7 @@ include_once './idioma.php'; // Array de traducción de la web.
                             </li>
                             <?php }
                         ?>
-                        <li><input type='file' name='imagenUsuario' id='imagenUsuario' accept=".jpg,.png"/></li>
+                        <li><input type='file' name='imagenUsuario' id='imagenUsuario' accept=".jpg,.jpeg,.png"/></li>
                         <li class="error"><?php echo $aErrores['imagenUsuario'] ?></li>
                     </ul>
                     <ul>

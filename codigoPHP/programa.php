@@ -68,10 +68,10 @@ try {
     unset($oDB);
 }
 
-include_once './idioma.php'; // Array de traducción de la web.
+include_once '../config/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
     <head>
         <meta charset="UTF-8">
         <title>Página principal - LoginLogoutTema5</title>
@@ -125,14 +125,11 @@ include_once './idioma.php'; // Array de traducción de la web.
     </head>
     <body>
         <header>
-            <button class="volver" form="mainForm" type="submit" name="logout" value="Volver">
-                <img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver">
-            </button>  
             <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['programa'] ?></h1>
         </header>
         <main>
             <section>
-                <div class="bienvenida">Bienvenido <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
+                <div class="bienvenida">Bienvenid@ <span class="user"><?php echo $oResultado->T01_DescUsuario ?></span>, esta es la <?php echo $oResultado->T01_NumConexiones ?>ª vez que se conecta<?php
                     if (!is_null($_SESSION['FechaHoraUltimaConexionAnterior'])) {
                         ?> y su última conexión fue <?php
                         echo $_SESSION['FechaHoraUltimaConexionAnterior'];

@@ -9,6 +9,13 @@
  * Comprueba si la combinación usuario-contraseña introducidos existen en la base
  * de datos, y si no es así, lo pide de nuevo.
  */
+
+// Si se ha dado al botón volver, vuelve al índice..
+if (isset($_REQUEST['cancelar'])) {
+    header('Location: ../indexLoginLogoffTema5.php');
+    exit;
+}
+
 /*
  * Si se quiere registrar, va a la página de registro.
  */
@@ -156,10 +163,10 @@ if ($bEntradaOK) {
     exit;
 }
 
-include_once './idioma.php'; // Array de traducción de la web.
+include_once '../config/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
     <head>
         <meta charset="UTF-8">
         <title>Login - LoginLogoutTema5</title>
@@ -248,11 +255,13 @@ include_once './idioma.php'; // Array de traducción de la web.
     </head>
     <body>
         <header>
-<?php include_once './elementoBtVolver.php'; // Botón de regreso           ?>
+            <button class="volver" form="mainForm" type="submit" name="cancelar" value="Volver">
+                <img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver">
+            </button> 
             <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['login'] ?></h1>
         </header>
         <main>
-            <form action='login.php' method='post'>
+            <form action='login.php' method='post' id="mainForm">
                 <fieldset>
                     <ul>
                         <li><label class="obligatorio" for='usuario' >Usuario</label></li>

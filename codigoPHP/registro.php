@@ -7,6 +7,12 @@
  * Página de registro de usuario.
  */
 
+// Si se desea cancelar o volver, vuelve al índice.
+if (isset($_REQUEST['cancelar'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once '../core/libreriaValidacion.php'; // Librería de validación.
 require_once '../config/configApp.php'; // Constantes de validación.
 require_once '../config/configDB.php'; // Constantes de conexión a la base de datos.
@@ -140,10 +146,10 @@ if ($bEntradaOK) {
     exit;
 }
 
-include_once './idioma.php'; // Array de traducción de la web.
+include_once '../config/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
     <head>
         <meta charset="UTF-8">
         <title>Registro de usuario - LoginLogoutTema5</title>
@@ -186,11 +192,13 @@ include_once './idioma.php'; // Array de traducción de la web.
     </head>
     <body>
         <header>
-            <?php include_once './elementoBtVolver.php'; // Botón de regreso ?>
+            <button class="volver" form="mainForm" type="submit" name="cancelar" value="Volver">
+                <img class="normal" src="../webroot/media/img/left-arrow-indigo.png" alt="volver"><img class="hover" src="../webroot/media/img/left-arrow-teal.png" alt="volver">
+            </button> 
             <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['registro'] ?></h1>
         </header>
         <main>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post'>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method='post' id="mainForm">
                 <fieldset>
                     <ul>
                         <li><label class="obligatorio" for='usuario' >Usuario</label></li>
@@ -206,6 +214,7 @@ include_once './idioma.php'; // Array de traducción de la web.
                     </ul>
                     <div class="error"><?php echo $sError; ?></div>
                 </fieldset>
+                <input class="button" type='submit' name='cancelar' value='Cancelar'/>
                 <input class="button" type='submit' name='registro' value='Registrarse'/>
             </form>
         </main>

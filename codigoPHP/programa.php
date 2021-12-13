@@ -87,17 +87,6 @@ include_once '../config/idioma.php'; // Array de traducción de la web.
                 margin-top: 0;
             }
             
-            @media (max-width: 650px){
-                main{
-                    flex-flow: column;
-                    justify-content: flex-start;
-                    align-items: center;
-                }
-                section:last-of-type{
-                    order: -1;
-                }
-            }
-
             div.bienvenida{
                 text-align: justify;
             }
@@ -120,6 +109,21 @@ include_once '../config/idioma.php'; // Array de traducción de la web.
                 max-width: 250px;
                 max-height: 500px;
                 border-radius: 5px;
+            }
+            
+            @media (max-width: 650px){
+                main{
+                    flex-flow: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+                section:last-of-type{
+                    order: -1;
+                }
+                section:last-of-type img{
+                    max-height: 250px;
+                    max-width: 500px;
+                }
             }
         </style>
     </head>
@@ -155,7 +159,7 @@ include_once '../config/idioma.php'; // Array de traducción de la web.
             <section>
                 <?php // Si el usuario tiene imagen de usuario, la muestra. Si no, muestra una de las de por defecto.
                 if ($oResultado->T01_ImagenUsuario) { ?>
-                    <img src="data:image/jpg;base64, <?php echo $oResultado->T01_ImagenUsuario ?>" alt="imagen de usuario">
+                    <img src="data:image/gif;base64, <?php echo $oResultado->T01_ImagenUsuario ?>" alt="imagen de usuario">
                 <?php } else{ ?>
                     <script>document.write(`<img src="../webroot/media/img/randomDefault/${Math.floor(Math.random()*5)}.jpg" alt="imagen de usuario"/>`);</script>
                 <?php } ?>

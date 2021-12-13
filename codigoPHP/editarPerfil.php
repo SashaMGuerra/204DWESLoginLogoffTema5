@@ -381,6 +381,14 @@ include_once '../config/idioma.php'; // Array de traducción de la web.
         </main>
 <?php include_once './elementoFooter.php'; //Footer          ?>
         <script>
+            /**
+             * Si el checkbox que ejecuta esta función (el de eliminar la imagen
+             * de usuario existente) se checa, elimina de la página el input de
+             * subida de imagen de usuario.
+             * Si el checkbox se desactiva, lo vuelve a mostrar. 
+             * 
+             * @param elemento checkbox Checkbox que ejecuta la función.
+             */
             function ocultarSubidaImagen(checkbox) {
                 if (checkbox.checked) {
                     document.getElementById('imagenUsuario').style.display = 'none';

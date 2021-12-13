@@ -498,14 +498,14 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @author Isabel Martínez Guerra.
      * @version 1.0 Creada la función.
      * @since 2021-12-13
-     * @param string $nombreArchivo Cadena que se va a comprobar.
-     * @param array $aExtensiones Tamaño máximo de la cadena.
-     * @param int $maxTamanio Tamaño mínimo de la cadena.
-     * @param int $minTamanio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
-     * @param boolean $obligatorio
+     * @param string $nombreArchivo Cadena con el nombre del archivo que se va a comprobar.
+     * @param array $aExtensiones Array con las posibles extensiones que puede tener el archivo.
+     * @param int $maxTamanio Tamaño máximo del nombre del archivo (contando la extensión y el punto).
+     * @param int $minTamanio Tamaño mínimo del nombre del archivo (contando la extensión y el punto).
+     * @param boolean $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
-    public static function validarNombreArchivo($nombreArchivo, $aExtensiones, $maxTamanio = 150, $minTamanio = 1, $obligatorio = 0) {
+    public static function validarNombreArchivo($nombreArchivo, $aExtensiones, $maxTamanio = 150, $minTamanio = 4, $obligatorio = 0) {
         // Validación del texto del nombre del archivo.
         $mensajeError = self::comprobarAlfaNumerico($nombreArchivo, $maxTamanio, $minTamanio, $obligatorio);
 

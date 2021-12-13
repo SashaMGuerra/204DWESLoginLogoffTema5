@@ -2,7 +2,7 @@ index ->    sin poner la ruta total, debe abrirse el index (LoginLogout/) (htacc
             
 login ->    botón ver password
 
-editarPerfil -> imagen de usuario: sólo jpg y png. Gif hace algo raro.
+editarPerfil -> imagen de usuario: sólo imágenes cuadradas.
 
 el nombre de la aplicación se tiene que ver siempre
 

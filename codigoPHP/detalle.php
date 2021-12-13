@@ -19,7 +19,7 @@ if (!isset($_SESSION['usuarioDAW204AppLoginLogoff'])) {
 include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
     <head>
         <meta charset="UTF-8">
         <title>Ventana de detalle - LoginLogoutTema5</title>

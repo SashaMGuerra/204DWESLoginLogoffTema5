@@ -3,12 +3,35 @@
     Author     : Sasha
 */
 
+
+header{
+    position: relative;
+}
+
+div.idiomas{
+    position: absolute;
+    top: 5px; right: 5px;
+}
+.idioma{
+    background-color: ghostwhite;
+    border: 2px ridge indigo;
+    color: indigo;
+    cursor: pointer;
+}
+.idioma.selected{
+    background-color: teal;
+    border: 2px ridge paleturquoise;
+    color: paleturquoise;
+}
+
+@media (max-width: 620px){
+    div.idiomas{
+        display: flex;
+        flex-flow: column;
+    }
+}
+
 form{
     margin: auto;
     text-align: center;
-}
-
-form div{
-    position: absolute;
-    top: 10px; right: 10px;
 }

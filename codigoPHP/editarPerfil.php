@@ -208,7 +208,7 @@ if ($bEntradaOK) {
 include_once './idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
     <head>
         <meta charset="UTF-8">
         <title>Editar perfil - LoginLogoutTema5</title>

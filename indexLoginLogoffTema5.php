@@ -9,6 +9,7 @@
  */
 require_once './core/libreriaValidacion.php'; // Librería de validación.
 
+
 /**
  * Si no se ha creado aún la cookie de idioma preferido, la crea en español por
  * defecto.
@@ -21,26 +22,28 @@ if (!isset($_COOKIE['idiomaPreferido'])) {
 }
 
 /**
+ * Si se ha elegido un idioma, y el idioma elegido está entre los existentes en
+ * la lista de idiomas, modifica la cookie y recarga la página.
+ */
+if (isset($_REQUEST['idioma']) && !validacionFormularios::validarElementoEnLista($_REQUEST['idioma'], ['ES', 'EN', 'PT'])) {
+    setcookie('idiomaPreferido', $_REQUEST['idioma'], time() + 604800);
+    header('Location: indexLoginLogoffTema5.php');
+    exit;
+}
+
+/**
  * Si se quiere pasar a la página de login, crea la cookie para el idioma preferido
  * —por defecto en español— y pasa a la página.
  */
 if (isset($_REQUEST['login'])) {
-    /*
-     * Validación de los posibles idiomas que puede tomar la página. Si el idioma
-     * está entre los existentes, crea la cookie y manda al usuario al login.
-     */
-    if (!validacionFormularios::validarElementoEnLista($_REQUEST['listaIdiomas'], ['ES', 'EN', 'PT'])) {
-        // Cookie con tiempo de expiración de 7 días.
-        setcookie('idiomaPreferido', $_REQUEST['listaIdiomas'], time() + 604800);
-        header('Location: ../LoginLogoffTema5/codigoPHP/login.php');
-        exit;
-    }
+    header('Location: codigoPHP/login.php');
+    exit;
 }
 
 include_once './codigoPHP/idioma.php'; // Array de traducción de la web.
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $_COOKIE['idiomaPreferido'] ?>">
     <head>
         <meta charset="UTF-8">
         <title>Proyecto Login-Logoff</title>
@@ -50,6 +53,11 @@ include_once './codigoPHP/idioma.php'; // Array de traducción de la web.
     <body>
         <header>
             <h1><?php echo $aIdiomaHeader[$_COOKIE['idiomaPreferido']]['programa'] ?></h1>
+            <div class="idiomas">
+                <button class="idioma <?php echo ($_COOKIE['idiomaPreferido'] == 'ES' ? 'selected' : '') ?>" type="submit" name="idioma" value="ES" form="mainForm">ES</button>
+                <button class="idioma <?php echo ($_COOKIE['idiomaPreferido'] == 'EN' ? 'selected' : '') ?>" type="submit" name="idioma" value="EN" form="mainForm">EN</button>
+                <button class="idioma <?php echo ($_COOKIE['idiomaPreferido'] == 'PT' ? 'selected' : '') ?>" type="submit" name="idioma" value="PT" form="mainForm">PT</button>
+            </div>
         </header>
         <main>
             <!--
@@ -58,17 +66,10 @@ include_once './codigoPHP/idioma.php'; // Array de traducción de la web.
             <a href="scriptDB/CargaInicialDAW204DBDepartamentosExplotacion.php">Carga</a>
             <a href="scriptDB/BorraDAW204DBDepartamentosExplotacion.php">Borrado</a>
             -->
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>">
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" id="mainForm">
                 <input class="button" type='submit' name='login' value='Login'/>
-                <div>
-                    <select class="idioma" name="listaIdiomas" id="listaIdiomas">
-                        <option value="ES" <?php echo (isset($_COOKIE['idiomaPreferido']) ? ($_COOKIE['idiomaPreferido'] == 'ES' ? 'selected' : '') : '') ?>>Español</option>
-                        <option value="EN" <?php echo (isset($_COOKIE['idiomaPreferido']) ? ($_COOKIE['idiomaPreferido'] == 'EN' ? 'selected' : '') : '') ?>>English</option>
-                        <option value="PT" <?php echo (isset($_COOKIE['idiomaPreferido']) ? ($_COOKIE['idiomaPreferido'] == 'PT' ? 'selected' : '') : '') ?>>Português</option>
-                    </select>
-                </div>
             </form>
         </main>
-        <?php include_once './codigoPHP/elementoFooter.php'; // Footer   ?>
+<?php include_once './codigoPHP/elementoFooter.php'; // Footer    ?>
     </body>
 </html>

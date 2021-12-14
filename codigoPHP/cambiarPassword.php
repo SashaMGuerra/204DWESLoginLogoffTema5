@@ -82,6 +82,7 @@ if (isset($_REQUEST['cambiarPassword'])) {
      */
     if (!$oResultado) {
         $aErrores['passwordActual'] = 'Contraseña incorrecta.';
+        $bEntradaOK = false;
     }
     /*
      * Si la contraseña coincide con la introducida, valida la nueva y comprueba
@@ -89,6 +90,7 @@ if (isset($_REQUEST['cambiarPassword'])) {
      */
     else{
         // Si la descripción no cumple con lo especificado, mostrará el error.
+        $aErrores['passwordActual'] = validacionFormularios::validarPassword($_REQUEST['passwordActual'], 8, 4, 1);
         $aErrores['passwordNueva'] = validacionFormularios::validarPassword($_REQUEST['passwordNueva'], 8, 4, 1);
    
         // Si la nueva contraseña no coincide con la repetida, añade el error.
